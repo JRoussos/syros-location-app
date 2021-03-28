@@ -1,0 +1,59 @@
+html {
+  --white-kinda:      rgb(251, 251, 251);
+  --white-shadow:     rgb(240, 240, 240);
+  --border-gray:      rgb(173, 173, 173);
+  --black-total:      rgb(0, 0, 0);
+  --black-opaque-25:  rgba(0, 0, 0, 0.25);
+  --black-opaque-35:  rgba(0, 0, 0, 0.35);
+  --black-opaque-60:  rgba(0, 0, 0, 0.6);
+  --black-opaque-70:  rgba(0, 0, 0, 0.7);
+
+  --white-total:      rgb(255, 255, 255);
+  --white-opaque-25:  rgba(255, 255, 255, 0.25);
+  --white-opaque-35:  rgba(255, 255, 255, 0.35);
+  --white-opaque-60:  rgba(255, 255, 255, 0.6);
+  --dark-shadow:      rgb(21, 21, 21);
+  --dark-fill:        rgb(27, 27, 27);
+  --dark-fill-box:    rgb(64, 64, 64);
+  --dark:             rgb(44, 44, 44);
+
+  --accent:           rgba(86, 153, 108, 0.7);
+}
+/* 7ABC43 */
+/* 95CA68 */
+.light {
+  --background: var(--white-kinda);
+  --border: var(--border-gray);
+  --shadow: var(--white-shadow);
+  --placeholder: var(--black-opaque-35);
+  --title: var(--black-total);
+  --subtitle: var(--black-opaque-60);
+  --img-shadow: var(--black-opaque-25);
+}
+
+.dark {
+  --background: var(--dark-fill);
+  --border: var(--border-gray);
+  --shadow: var(--dark-shadow);
+  --placeholder: var(--white-opaque-35);
+  --title: var(--white-total);
+  --subtitle: var(--white-opaque-60);
+  --img-shadow: var(--white-opaque-25);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Poppins', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* background: #1b1b1b; */
+  background: var(--background);
+  transition: all .2s ease-in-out;
+  overscroll-behavior: none;
+}
+
+canvas {
+  outline: none;
+}
