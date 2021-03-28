@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
-import Toast from './Toast'
+import React, { useState, useRef } from 'react';
+import Toast, {showToast} from './Toast';
 
-const places = [
-    {name: 'Hermoupolis',   location: [24.942510526728135, 37.44061640827948]}, 
-    {name: 'Ano Syros',     location: [24.93616015846609, 37.44921635523102]}, 
-    {name: 'Galissas',      location: [24.88260288147806, 37.421016233241886]}, 
-    {name: 'Finikas',       location: [24.87769604369507, 37.39739629800199]}, 
-    {name: 'Poseidonia',    location: [24.886639833820777, 37.389367603716316]}, 
-    {name: 'Megas Gialos',  location: [24.90901131756162, 37.38065270066173]},
-    {name: 'Vari',          location: [24.946256666308543, 37.39647055589011]}, 
-    {name: 'Azolimnos',     location: [24.95940502507134, 37.4098833209217]} 
-]
+const MAPBOX_KEY = process.env.REACT_APP_MAPBOX_KEY;
 
-const Search = ({ dispatch }) => {
+const Search = ({ state, dispatch }) => {
     const [ active, setActive ] = useState(0)
-    const [ errMessage, setError ] = useState(null)
-    // const { dispatch } = useContext(recycleContext)
+    const [ focus, setFocus ] = useState(false)
+    const [ places, setPlaces ] = useState([
+        {name: 'Hermoupolis',   location: [24.942510526728135, 37.44061640827948]}, 
+        {name: 'Ano Syros',     location: [24.93616015846609, 37.44921635523102]}, 
+        {name: 'Galissas',      location: [24.88260288147806, 37.421016233241886]}, 
+        {name: 'Finikas',       location: [24.87769604369507, 37.39739629800199]}, 
+        {name: 'Poseidonia',    location: [24.886639833820777, 37.389367603716316]}, 
+        {name: 'Megas Gialos',  location: [24.90901131756162, 37.38065270066173]},
+        {name: 'Vari',          location: [24.946256666308543, 37.39647055589011]}, 
+        {name: 'Azolimnos',     location: [24.95940502507134, 37.4098833209217]} 
+    ])
+
+    const [ results, setResults ] = useState([])
+
+    const inputRef = useRef()
+    const { syrosBounds } = state
 
     const handleLocationChange = index => {
         setActive(index)
@@ -34,13 +39,7 @@ const Search = ({ dispatch }) => {
 
     const onError = err => {
         console.warn(`ERROR(${err.code}): ${err.message}`);
-        
-        setError(err.message)
-        
-        document.getElementById('toast').classList.add('show')     
-        setTimeout(() => {
-            document.getElementById('toast').classList.remove('show')     
-        }, 3000);
+        showToast(err.message, 'error', 3000)
     }
 
     const getCoords = pos => {
@@ -52,14 +51,44 @@ const Search = ({ dispatch }) => {
         dispatch({ type: 'CHANGE_LOCATION', location: [lng, lat]})
     }
 
+    const handleSubmitForm = event => {
+        // showToast('This feature is not yet supported', 'info', 3000)
+
+        event.preventDefault()
+        console.log(inputRef.current.value);
+
+        const bbox = `${syrosBounds[0][0]},${syrosBounds[0][1]},${syrosBounds[1][0]},${syrosBounds[1][1]}`
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${inputRef.current.value}.json?bbox=${bbox}&types=place&access_token=${MAPBOX_KEY}`
+
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            setResults(data.features)
+        })
+        .catch( error => {
+            console.warn("ERROR: ", error)
+            showToast(error, 'error', 3000)
+        })
+
+        // inputRef.current.value = null
+    }
+
     return (
         <section className="search">
             <div className="input_wrapper">
                 <svg style={{ padding: "25px", fill: "var(--title)", fillOpacity: "0.35", transition: "transition: all .2s ease-in-out" }} width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" clipRule="evenodd" d="M11.5517 13.8719C10.3998 14.587 9.03988 15 7.58318 15C3.42976 15 0.0627441 11.6421 0.0627441 7.5C0.0627441 3.35786 3.42976 0 7.58318 0C11.7366 0 15.1036 3.35786 15.1036 7.5C15.1036 9.46568 14.3453 11.2547 13.1046 12.5921L15.347 14.8284C15.7385 15.2189 15.7385 15.8521 15.347 16.2426C14.9554 16.6331 14.3205 16.6331 13.9289 16.2426L11.5517 13.8719ZM14.1008 7.5C14.1008 11.0899 11.1827 14 7.58311 14C3.98347 14 1.0654 11.0899 1.0654 7.5C1.0654 3.91015 3.98347 1 7.58311 1C11.1827 1 14.1008 3.91015 14.1008 7.5Z" />
                 </svg>
-                <input type="text" placeholder="Search for a location.."/>
+                <form onSubmit={handleSubmitForm}>
+                    <input ref={inputRef} type="text" onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} placeholder="Search for a location.."/>
+                </form>
             </div>
+            {results.map( (feature, index) => (
+                <div className="result_container" key={index} onClick={() => dispatch({ type: 'CHANGE_LOCATION', location: feature.center})}>
+                    <p>{feature.place_name}</p>
+                </div>
+            ))}
             <div className="places_wrapper">
                 {navigator.geolocation ? // if geolocation is supported on device
                     <div className={active === -1 ? "btn selected_btn dark" : "btn"} onClick={hadleGetGeoLocation}>
@@ -74,8 +103,7 @@ const Search = ({ dispatch }) => {
                 ))}
                 <div className="btn" style={{borderColor: "transparent", marginLeft: "8px"}}></div>
             </div>
-            <Toast message={errMessage} type="error"/>
-            {/* <p className="subtitle">or enable location search for easy results</p> */}
+            <Toast/>
         </section>
     )
 }

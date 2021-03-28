@@ -17,7 +17,7 @@ html {
   --dark-fill-box:    rgb(64, 64, 64);
   --dark:             rgb(44, 44, 44);
 
-  --accent:             #6ec16f; 
+  --accent:             #6ec16f; /* 48b24a 7ABC43 95CA68 */
 
   --error-border:       #ec4e2c;
   --error-back:         #fcedea;
@@ -27,9 +27,7 @@ html {
   --info-back:          #e5effa;
 
 }
-/* 48b24a */
-/* 7ABC43 */
-/* 95CA68 */
+
 .light {
   --background: var(--white-kinda);
   --border: var(--border-gray);

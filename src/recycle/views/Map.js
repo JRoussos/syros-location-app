@@ -12,6 +12,7 @@ const Map = ({ state}) => {
 
     const mapContainerRef = useRef(null)
     const mapInstance = useRef(null)
+    const markerRef = useRef(new mapboxgl.Marker({ color: '#ec4e2c', scale: 0.7 }))
 
     console.log(location);
     console.log(category);
@@ -26,12 +27,14 @@ const Map = ({ state}) => {
     })
 
     useEffect(() => {
-        if(mapInstance.current)
+        if(mapInstance.current){
             mapInstance.current.flyTo({ 
                 center: location, 
-                zoom: mapConfig.zoom, 
+                zoom: 15, 
                 essential: true 
             })
+            markerRef.current.setLngLat(location).addTo(mapInstance.current)
+        }
         else return
     }, [location])
 
@@ -44,8 +47,6 @@ const Map = ({ state}) => {
             maxBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
             attributionControl: false
         })
-
-        // https://api.mapbox.com/geocoding/v5/mapbox.places/{searchParam}.json?bbox=24.844369,37.356365,24.993442,37.521599&access_token=pk.eyJ1Ijoiam9objYzMiIsImEiOiJjazZtcm1mZm8waGs2M3VydWhvZjU2bXNrIn0.GCk0_AijdN89AK7LqqxgGw
 
         // mapInstance.current.on('move', () => {
         //     setMapConfig({

@@ -13,7 +13,8 @@ import './styles/recycle_styles.css';
 
 const initialState = {
     theme: 'light',
-    location: [[24.942510526728135, 37.44061640827948]],
+    location: [24.942510526728135, 37.44061640827948],
+    syrosBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
     category: 'plastic'
 }
 
@@ -33,14 +34,6 @@ const recycleReducer = (state, action) => {
 
 const Recycle = () => {
     const [state, dispatch] = useReducer( recycleReducer, initialState );
-  
-    // const handleIncrease = () => {
-    //   dispatch({ type: 'CHANGE_LOCATION', location: 'Galissas'});
-    // };
-  
-    // const handleDecrease = () => {
-    //   dispatch({ type: 'CHANGE_TYPE', category: 'glass' });
-    // };
 
     return (
         <main className="background">
@@ -48,7 +41,7 @@ const Recycle = () => {
             <article id="container">
                 <Menu/>
                 <Title/>
-                <Search dispatch={dispatch}/>
+                <Search state={state} dispatch={dispatch}/>
                 <Categories dispatch={dispatch}/>
                 <Map state={state}/>
                 <Footer/>
