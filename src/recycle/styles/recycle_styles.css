@@ -102,7 +102,8 @@ header .hamburger_btn div:not(.menu-is-open) {
     background: var(--background);
     border: 1px solid var(--border);
     box-sizing: border-box;
-    box-shadow: 0px 4px 15px 7px var(--shadow);
+    /* box-shadow: 0px 4px 15px 7px var(--shadow); */
+    box-shadow: 1px 1px 10px 0px var(--black-opaque-25);
     border-radius: 22px;
     /* height: 67px; */
 
@@ -159,7 +160,8 @@ header .hamburger_btn div:not(.menu-is-open) {
     background: var(--background);
     border: 1px solid var(--border);
     box-sizing: border-box;
-    box-shadow: 0px 0px 15px 7px var(--shadow);
+    /* box-shadow: 0px 0px 15px 7px var(--shadow); */
+    box-shadow: 1px 1px 4px 0px var(--black-opaque-25);
     border-radius: 12px;
     transition: all .2s ease-in-out;
     
@@ -253,7 +255,8 @@ header .hamburger_btn div:not(.menu-is-open) {
     background: var(--background);
     border: 1px solid var(--border);
     box-sizing: border-box;
-    box-shadow: 0px 0px 15px 7px var(--shadow);
+    /* box-shadow: 0px 0px 15px 7px var(--shadow); */
+    box-shadow: 1px 1px 4px 0px var(--black-opaque-25);
     border-radius: 12px;
     transition: all .2s ease-in-out;
     
@@ -332,7 +335,8 @@ header .hamburger_btn div:not(.menu-is-open) {
     border-radius: 12px;
 
     /* border: 1px solid var(--border); */
-    box-shadow: 0px 0px 15px 7px var(--shadow)
+    /* box-shadow: 0px 0px 15px 7px var(--shadow) */
+    box-shadow: 1px 1px 4px 1px var(--black-opaque-25);
 }
 
 /* FOOTER */
@@ -379,4 +383,63 @@ header .hamburger_btn div:not(.menu-is-open) {
 .footer p a {
     color: var(--black-opaque-60);
     font-weight: 600;
+}
+
+/* TOAST */
+
+#toast {
+    visibility: hidden;
+    position: fixed;
+    bottom: 30px;
+
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 3px 6px 20px 5px var(--black-opaque-25);
+    /* opacity: 0; */
+
+    z-index: 1000;
+    padding: 0 20px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+.error {
+    border: 1px solid var(--error-border);
+    background: var(--error-back);
+}
+
+.info {
+    border: 1px solid var(--info-border);
+    background: var(--info-back);
+}
+
+.succcess {
+    border: 1px solid var(--success-border);
+    background: var(--success-back);
+}
+
+.show {
+    visibility: visible !important; 
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+#toast p {
+    width: 100%;
+    text-align: center;
+    margin: 10px;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--dark);
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }

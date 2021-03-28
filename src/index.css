@@ -17,8 +17,17 @@ html {
   --dark-fill-box:    rgb(64, 64, 64);
   --dark:             rgb(44, 44, 44);
 
-  --accent:           rgba(86, 153, 108, 0.7);
+  --accent:             #6ec16f; 
+
+  --error-border:       #ec4e2c;
+  --error-back:         #fcedea;
+  --success-border:     #3ebd60;
+  --success-back:       #ebf7ee;
+  --info-border:        #006de4;
+  --info-back:          #e5effa;
+
 }
+/* 48b24a */
 /* 7ABC43 */
 /* 95CA68 */
 .light {
