@@ -7,6 +7,7 @@ html {
   --black-opaque-35:  rgba(0, 0, 0, 0.35);
   --black-opaque-60:  rgba(0, 0, 0, 0.6);
   --black-opaque-70:  rgba(0, 0, 0, 0.7);
+  --black-opaque-80:  rgba(0, 0, 0, 0.8);
 
   --white-total:      rgb(255, 255, 255);
   --white-opaque-25:  rgba(255, 255, 255, 0.25);
@@ -33,7 +34,8 @@ html {
   --border: var(--border-gray);
   --shadow: var(--white-shadow);
   --placeholder: var(--black-opaque-35);
-  --title: var(--black-total);
+  --header: var(--black-total);
+  --title: var(--black-opaque-80);
   --subtitle: var(--black-opaque-60);
   --img-shadow: var(--black-opaque-25);
 }
@@ -43,6 +45,7 @@ html {
   --border: var(--border-gray);
   --shadow: var(--dark-shadow);
   --placeholder: var(--white-opaque-35);
+  --header: var(--white-total);
   --title: var(--white-total);
   --subtitle: var(--white-opaque-60);
   --img-shadow: var(--white-opaque-25);

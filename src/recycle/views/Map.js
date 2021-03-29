@@ -22,7 +22,7 @@ const Map = ({ state}) => {
     
     const [ mapConfig, setMapConfig ] = useState({
         center: [24.940336, 37.444246],
-        zoom: 14,
+        zoom: 11,
         mapStyle: lightMapStyle
     })
 
@@ -30,7 +30,7 @@ const Map = ({ state}) => {
         if(mapInstance.current){
             mapInstance.current.flyTo({ 
                 center: location, 
-                zoom: 15, 
+                zoom: 14, 
                 essential: true 
             })
             markerRef.current.setLngLat(location).addTo(mapInstance.current)

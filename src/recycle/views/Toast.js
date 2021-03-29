@@ -4,6 +4,8 @@ import { createPortal } from 'react-dom';
 export const showToast = (message, type="default", timeout) => {
     const toast = document.getElementById('toast')
     const cls = ['show', type]
+
+    toast.style.setProperty('--timeout', `${(timeout-500) / 1000}s` )
     
     toast.firstChild.innerHTML = message
     toast.classList.add(...cls)     

@@ -61,7 +61,7 @@ header .hamburger_btn div:not(.menu-is-open) {
     font-weight: 600;
     font-size: 27px;
     line-height: 35px;
-    color: var(--title);
+    color: var(--header);
 
     /* white-space: nowrap; */
     
@@ -98,7 +98,7 @@ header .hamburger_btn div:not(.menu-is-open) {
     padding: 40px 0;
 }
 
-.search .input_wrapper {
+.search .search_container {
     background: var(--background);
     border: 1px solid var(--border);
     box-sizing: border-box;
@@ -107,10 +107,23 @@ header .hamburger_btn div:not(.menu-is-open) {
     border-radius: 22px;
     /* height: 67px; */
 
+    transition: all .2s ease-in-out;
+}
+
+.search .input_wrapper {
+    /* border-bottom: 1px solid var(--border);
+    border-radius: 22px; */
+
     display: flex;
     flex-direction: row;
     align-items: center;
     transition: all .2s ease-in-out;
+}
+
+.search .search_container hr {
+    margin-top: 0;
+    width: 85%;
+    background-color: var(--border);
 }
 
 .search .input_wrapper img {
@@ -145,17 +158,17 @@ header .hamburger_btn div:not(.menu-is-open) {
 }
 
 .search .result_container {
-    background: var(--background);
+    /* background: var(--background);
     border: 1px solid var(--border);
     box-shadow: 0px 1px 10px 0px var(--black-opaque-25);
-    border-radius: 12px;
+    border-radius: 12px; */
 
     display: flex;
     flex-direction: row;
     align-items: center;
     transition: all .2s ease-in-out;
 
-    margin-top: 10px;
+    margin: 10px 0;
 }
 
 .search .result_container p {
@@ -460,7 +473,7 @@ header .hamburger_btn div:not(.menu-is-open) {
 
 .show {
     visibility: visible !important; 
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s var(--timeout);
 }
 
 #toast p {

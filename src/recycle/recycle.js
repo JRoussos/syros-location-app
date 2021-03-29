@@ -13,7 +13,7 @@ import './styles/recycle_styles.css';
 
 const initialState = {
     theme: 'light',
-    location: [24.942510526728135, 37.44061640827948],
+    location: [24.941304, 37.445081],
     syrosBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
     category: 'plastic'
 }
