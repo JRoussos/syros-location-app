@@ -21,7 +21,7 @@ const Search = ({ state, dispatch }) => {
         {name: 'Azolimnos',     location: [24.959405, 37.409883]} 
     ])
 
-    const { syrosBounds } = state
+    const { syrosBounds, local } = state
     const bbox = `${syrosBounds[0][0]},${syrosBounds[0][1]},${syrosBounds[1][0]},${syrosBounds[1][1]}`
 
     const handleLocationChange = index => {
@@ -54,7 +54,7 @@ const Search = ({ state, dispatch }) => {
     }
 
     const handleChangeInput = () => {
-        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${inputRef.current.value}.json?bbox=${bbox}&types=place,poi&limit=3&access_token=${MAPBOX_KEY}`
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${inputRef.current.value}.json?bbox=${bbox}&types=place,poi&language=${local}&limit=3&access_token=${MAPBOX_KEY}`
         console.log(inputRef.current.value);
 
         if(inputRef.current.value === '' ) {
@@ -78,7 +78,7 @@ const Search = ({ state, dispatch }) => {
         <section className="search">
             <div className="search_container">
                 <div className="input_wrapper">
-                    <svg style={{ padding: "25px", fill: "var(--title)", fillOpacity: "0.35", transition: "transition: all .2s ease-in-out" }} width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg style={{ padding: "25px", fill: "var(--title)", fillOpacity: "0.85" }} width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd" d="M11.5517 13.8719C10.3998 14.587 9.03988 15 7.58318 15C3.42976 15 0.0627441 11.6421 0.0627441 7.5C0.0627441 3.35786 3.42976 0 7.58318 0C11.7366 0 15.1036 3.35786 15.1036 7.5C15.1036 9.46568 14.3453 11.2547 13.1046 12.5921L15.347 14.8284C15.7385 15.2189 15.7385 15.8521 15.347 16.2426C14.9554 16.6331 14.3205 16.6331 13.9289 16.2426L11.5517 13.8719ZM14.1008 7.5C14.1008 11.0899 11.1827 14 7.58311 14C3.98347 14 1.0654 11.0899 1.0654 7.5C1.0654 3.91015 3.98347 1 7.58311 1C11.1827 1 14.1008 3.91015 14.1008 7.5Z" />
                     </svg>
                     <input ref={inputRef} type="text" placeholder={t('input_placeholder')} onChange={handleChangeInput}/>

@@ -10,15 +10,18 @@ html {
   --black-opaque-80:  rgba(0, 0, 0, 0.8);
 
   --white-total:      rgb(255, 255, 255);
+  --white-opaque-10:  rgba(255, 255, 255, 0.1);
   --white-opaque-25:  rgba(255, 255, 255, 0.25);
   --white-opaque-35:  rgba(255, 255, 255, 0.35);
   --white-opaque-60:  rgba(255, 255, 255, 0.6);
+  --white-opaque-70:  rgba(255, 255, 255, 0.7);
   --dark-shadow:      rgb(21, 21, 21);
   --dark-fill:        rgb(27, 27, 27);
   --dark-fill-box:    rgb(64, 64, 64);
   --dark:             rgb(44, 44, 44);
 
-  --accent:             #6ec16f; /* 48b24a 7ABC43 95CA68 */
+  --accent:             #7ac950; /* 48b24a 6ec16f 7ABC43 95CA68 */
+  --accent-dark:        #5d9e28;
 
   --error-border:       #ec4e2c;
   --error-back:         #fcedea;
@@ -29,8 +32,9 @@ html {
 
 }
 
-.light {
+body:not(.dark) {
   --background: var(--white-kinda);
+  --hamburger: var(--dark-fill);
   --border: var(--border-gray);
   --shadow: var(--white-shadow);
   --placeholder: var(--black-opaque-35);
@@ -42,13 +46,14 @@ html {
 
 .dark {
   --background: var(--dark-fill);
+  --hamburger: var(--white-kinda);
   --border: var(--border-gray);
   --shadow: var(--dark-shadow);
   --placeholder: var(--white-opaque-35);
   --header: var(--white-total);
   --title: var(--white-total);
-  --subtitle: var(--white-opaque-60);
-  --img-shadow: var(--white-opaque-25);
+  --subtitle: var(--white-opaque-70);
+  --img-shadow: var(--black-opaque-35);
 }
 
 body {
@@ -60,7 +65,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* background: #1b1b1b; */
   background: var(--background);
-  transition: all .2s ease-in-out;
+  /* transition: all .2s ease-in-out; */
   overscroll-behavior: none;
 }
 

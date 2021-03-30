@@ -9,7 +9,7 @@ import battery_icon from '../assets/battery.png';
 import clothes_icon from '../assets/clothes.png';
 
 const btns_arrays = [
-    {title_en: 'plastic', title_el: 'πλαστικά', icon: plastic_icon}, 
+    {title_en: 'plastic', title_el: 'πλαστικό', icon: plastic_icon}, 
     {title_en: 'paper', title_el: 'χαρτί', icon: paper_icon}, 
     {title_en: 'glass', title_el: 'γυαλί', icon: glass_icon}, 
     {title_en: 'electronics', title_el: 'ηλεκτρικές συσκευές', icon: electric_icon}, 

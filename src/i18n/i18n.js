@@ -8,7 +8,6 @@ import el from './el';
 i18n.use(LanguageDetector).use(initReactI18next).init({
   resources: { en, el }, 
   fallbackLng: "en", 
-  debug: true,
   ns: ["translations"], // have a common namespace used around the full app
   defaultNS: "translations",
   keySeparator: false, // we use content as keys

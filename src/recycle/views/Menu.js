@@ -18,6 +18,11 @@ const Menu = ({ state, dispatch }) => {
         dispatch({ type: 'CHANGE_LOCAL', local: changeTo })
     }
 
+    const handleChangeTheme = () => {
+        document.body.classList.toggle('dark')
+        dispatch({ type: 'CHANGE_THEME', theme: theme==='light' ? 'dark' : 'light' })
+    }
+
     return (
         <div className="menu" style={{height: "250px"}}>
             <div className="menu-elements">
@@ -25,7 +30,7 @@ const Menu = ({ state, dispatch }) => {
                     {local === 'en' ? <img src={us} alt="us-flag"/> : <img src={el} alt="el-flag"/>}
                     <p>{t('language')}</p>
                 </div>
-                <div className="menu-btn" onClick={() => dispatch({ type: 'CHANGE_THEME', theme: theme==='light' ? 'dark' : 'light' })}>
+                <div className="menu-btn" onClick={handleChangeTheme}>
                     {theme === 'light' ? <img src={sun} alt="light mode"/> : <img src={moon} alt="dark mode"/> }    
                     <p>{t('theme')}</p>
                 </div>

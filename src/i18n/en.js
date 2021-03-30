@@ -6,7 +6,7 @@ const en = {
         'header_title_continue': 'the nearest recycle point',
         'header_location': 'Syros, Cyclades, Greece',
         'input_placeholder': 'Search for a location..',
-        'categories_title': 'Categories',
+        'categories_title': "I'm looking to recycle..",
         'map_title': 'Map View'
     }
   }

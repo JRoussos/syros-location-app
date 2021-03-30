@@ -8,13 +8,10 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import stores from './feat';
 import recycle_image from '../assets/green.png';
 
-import { useTranslation } from 'react-i18next';
-
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY 
 
 const Map = ({ state}) => {
-    const { t } = useTranslation()
-    const { location, category } = state
+    const { location, category, theme } = state
 
     const mapContainerRef = useRef(null)
     const mapInstance = useRef(null)
@@ -33,7 +30,7 @@ const Map = ({ state}) => {
         if(mapInstance.current){
             mapInstance.current.flyTo({ 
                 center: location, 
-                zoom: 15, 
+                zoom: 15,
                 essential: true 
             })
             markerRef.current.setLngLat(location).addTo(mapInstance.current)
@@ -42,16 +39,33 @@ const Map = ({ state}) => {
     }, [location])
 
     useEffect(() => {
+        if(mapInstance.current){
+            setMapConfig( prevConfig => { 
+                const updatedConfig = {
+                    center: prevConfig.center,
+                    zoom: prevConfig.zoom,
+                    mapStyle: theme==='light' ? lightMapStyle : darkMapStyle
+                }
+
+                return { ...prevConfig, ...updatedConfig }
+            })
+            // setMapConfig({ ...mapConfig, mapStyle: theme==='light' ? lightMapStyle : darkMapStyle })
+        }
+    }, [theme])
+
+    useEffect(() => {
         mapInstance.current = new mapboxgl.Map({
             container: mapContainerRef.current,
             style: mapConfig.mapStyle,
             center: mapConfig.center,
             zoom: mapConfig.zoom,
             maxBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
-            attributionControl: false
+            attributionControl: false,
+            antialias: true
         })
 
         mapInstance.current.on('load', () => {
+            mapInstance.current.addControl( new mapboxgl.FullscreenControl(),'bottom-right')
 
             mapInstance.current.loadImage( recycle_image, (error, image) => {
                 if (error) throw error;
@@ -88,9 +102,7 @@ const Map = ({ state}) => {
 
     return (
         <section id="map" className="map">
-            <h5>{t('map_title')}</h5>
-            {/* <button onClick={() => setMapConfig({ ...mapConfig, mapStyle: mapConfig.mapStyle===darkMapStyle ? lightMapStyle : darkMapStyle })}>style</button>
-            <button onClick={() => mapInstance.current.fitBounds([ [24.883661, 37.410933], [24.883603, 37.427273] ])}>flyTo</button> */}
+            {/* <h5>{t('map_title')}</h5> */}
             <div className="map-container" ref={mapContainerRef}/>
         </section>
     )

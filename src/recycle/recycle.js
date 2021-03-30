@@ -44,8 +44,8 @@ const Recycle = () => {
             <article id="container">
                 <Menu state={state} dispatch={dispatch}/>
                 <Title/>
-                <Search state={state} dispatch={dispatch}/>
                 <Categories state={state} dispatch={dispatch}/>
+                <Search state={state} dispatch={dispatch}/>
                 <Map state={state}/>
                 <Footer/>
             </article>

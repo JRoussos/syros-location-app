@@ -6,7 +6,7 @@ const el = {
         'header_title_continue': 'το πλησιέστερο σήμειο ανακύκλωσης.',
         'header_location': 'Σύρος, Κυκλάδες, Ελλάδα',
         'input_placeholder': 'Αναζήτησε μια τοποθεσία..',
-        'categories_title': 'Κατηγορίες',
+        'categories_title': 'Θέλω να ανακυκλώσω..',
         'map_title': 'Χάρτης'
     }
   }
