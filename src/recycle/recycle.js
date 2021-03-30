@@ -13,6 +13,7 @@ import './styles/recycle_styles.css';
 
 const initialState = {
     theme: 'light',
+    local: 'en',
     location: [24.941304, 37.445081],
     syrosBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
     category: 'plastic'
@@ -26,7 +27,9 @@ const recycleReducer = (state, action) => {
         case 'CHANGE_TYPE':
             return { ...state, category: action.category }
         case 'CHANGE_THEME':
-            return { ...state }
+            return { ...state, theme: action.theme }
+        case 'CHANGE_LOCAL': 
+            return { ...state, local: action.local }
         default:
             throw new Error();
     }
@@ -39,10 +42,10 @@ const Recycle = () => {
         <main className="background">
             <Header/>
             <article id="container">
-                <Menu/>
+                <Menu state={state} dispatch={dispatch}/>
                 <Title/>
                 <Search state={state} dispatch={dispatch}/>
-                <Categories dispatch={dispatch}/>
+                <Categories state={state} dispatch={dispatch}/>
                 <Map state={state}/>
                 <Footer/>
             </article>

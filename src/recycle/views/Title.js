@@ -1,9 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Title = () => {
+    const { t } = useTranslation()
     return (
         <section className="title">
-            <h3>Find where is<br/>the nearest recycle spot.</h3>
+            <h3>{t('header_title_start')}<br/>{t('header_title_continue')}</h3>
             <div className="subtitle">
                 <svg style={{ padding: "5px", paddingLeft: 0, marginTop: "5px", overflow: "visible", fill: "var(--title)", fillOpacity: "0.60" }} width="21" height="21" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g filter="url(#filter0_d)">
@@ -21,7 +23,7 @@ const Title = () => {
                         </filter>
                     </defs>
                 </svg>
-                <p>Syros, Cyclades, Greece</p>
+                <p>{t('header_location')}</p>
             </div>
         </section>
     )
