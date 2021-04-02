@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import glass_icon from '../assets/glass.png';
-import paper_icon from '../assets/paper.png';
-import plastic_icon from '../assets/plastic.png';
+import paper_icon from '../assets/package.png';
+import plastic_icon from '../assets/cup.png';
 import electric_icon from '../assets/electric.png';
 import battery_icon from '../assets/battery.png';
 import clothes_icon from '../assets/clothes.png';
@@ -38,7 +38,7 @@ const Categories = ({ state, dispatch }) => {
                         <p>{local==='en' ? _.title_en : _.title_el}</p>
                     </div>
                 ))}
-                <div className="btn" style={{borderColor: "transparent", marginLeft: "8px"}}></div>
+                <div className="btn" style={{border: "1px solid transparent", marginLeft: "8px"}}></div>
             </div>
         </section>
     )

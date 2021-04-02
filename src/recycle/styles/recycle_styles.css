@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
 .background {
     position: absolute;
@@ -35,7 +35,8 @@ article {
     border-radius: 12px;
 }
 .menu-elements .menu-btn img {
-    padding: 10px 15px;
+    padding: 10px 20px;
+    width: 60px;
 }
 
 .menu-elements .menu-btn p {
@@ -62,37 +63,51 @@ header .hamburger_wrapper {
     margin-top: -15px;
 }
 
-/* header .hamburger_btn {
-    padding: 10px;
+header .hamburger_btn {
+    padding: 15px;
     margin-right: -10px;
-} */
+    border-radius: 10px;
+    background: var(--white-total);
+    box-shadow: 0px 4px 12px -6px var(--img-shadow);
+}
 
 header .hamburger_btn div:not(.menu-is-open) {
-    border-bottom: 2px solid var(--hamburger);
-    margin-top: 5px;
+    border: 1px solid var(--black-opaque-60);
+    margin: 5px 0;
     width: 35px;
     border-radius: 2px;
-    transition: margin-top .2s ease-in-out;
+    transition: margin .2s ease-in-out;
 }
 
 .menu-is-open {
-    border-bottom: 2px solid var(--hamburger);
-    margin-top: 8px;
+    border: 1px solid var(--black-opaque-60);
+    margin: 8px 0;
     width: 35px;
     border-radius: 2px;
-    transition: margin-top .2s ease-in-out;
+    transition: margin .2s ease-in-out;
 }
 
 /* TITLE */
 
+.title {
+    position: relative;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 0 -10px;
+    background: linear-gradient(100deg, hsl(110deg 45% 50% / 100%) 0%, hsl(100deg 45% 60% / 100%) 100%);
+    box-shadow: inset 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+}
+
 .title h3 {
     font-family: 'Poppins', 'Inter';
-    /* font-family: 'Inter', sans-serif; */
     font-weight: 600;
-    font-size: 27px;
+    /* font-size: 27px; */
+    font-size: clamp(22px, 6.8vw, 30px);
     line-height: 35px;
-    color: var(--header);
-
+    color: var(--title);
+    color: var(--white-kinda);
+    
+    /* text-shadow: 0px 4px 25px var(--black-opaque-25); */
     /* white-space: nowrap; */
     
     display: flex;
@@ -105,7 +120,7 @@ header .hamburger_btn div:not(.menu-is-open) {
     display: flex;
     flex-direction: row;
 
-    color: var(--subtitle);
+    opacity: 0.8;
 }
 
 .title .subtitle svg {
@@ -117,63 +132,113 @@ header .hamburger_btn div:not(.menu-is-open) {
 .title p {
     font-family: 'Poppins', 'Inter';
     font-style: normal;
-    font-weight: normal;
+    font-weight: 500;
     font-size: 13px;
+    font-size: clamp(10px, 3.5vw, 13px);
     line-height: 18px;
+    color: var(--white-opaque-70);
+}
+
+.title .pages_indicator {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 8px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+.title .pages_indicator div{
+    margin: 0 5px;
+    border-radius: 20px;
+    width: 8px;
+    height: 100%;
+    background: var(--white-opaque-70);
+    box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+}
+
+.title .pages_indicator div:nth-child(1) {
+    width: 20px;
 }
 
 /* SEARCH BAR */
 
 .search {
-    padding-top: 70px;
+    padding-top: 10vh;
+
+    position: relative;
+    z-index: 100;
+    /* margin: 0 -10px; */
 }
 
 .search .search_container {
-    background: var(--background);
+    background: var(--white-total);
     border: 1px solid var(--border);
     box-sizing: border-box;
-    /* box-shadow: 0px 4px 15px 7px var(--shadow); */
-    box-shadow: 0px 1px 10px 0px var(--img-shadow);
-    border-radius: 22px;
+
+    border-radius: 10px;
     overflow: hidden;
 
-    /* transition: all .2s ease-in-out; */
+    transition: all .3s ease-in-out;
+
+    position: absolute;
+    width: 100%;
+
+    /* box-shadow: 0px 0px 15px -6px var(--black-opaque-25); */
+    box-shadow: 0px 4px 12px -6px var(--img-shadow);
+}
+
+.focused {
+    /* box-shadow: 0px 4px 15px 7px var(--shadow); */
+    box-shadow: 0px 15px 20px -10px var(--img-shadow);
+}
+
+.search .search_container .result_wrapper {
+    height: 0;
+    transition: all .3s ease-in-out;
 }
 
 .search .input_wrapper {
-    /* border-bottom: 1px solid var(--border);
-    border-radius: 22px; */
+    /* border: 1px solid var(--border); */
+    box-sizing: border-box;
+    /* border-radius: 10px; */
+    overflow: hidden;
 
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* transition: all .2s ease-in-out; */
+
+    margin: -1px;
 }
 
-.search .search_container hr {
-    margin-top: 0;
-    width: 85%;
-    border-bottom: none;
-    background-color: var(--border);
+.search .search_container h5:first-of-type {
+    padding: 20px 0 0 20px; 
 }
 
-.search .input_wrapper img {
-    padding: 25px;
+.search .search_container h5 {
+    color: var(--subtitle);
+    padding: 10px 0px 15px 20px; 
+    margin: 0;
+}
+
+.search .input_wrapper svg {
+    padding: 20px 25px;
+    padding: 28px 20px;
+    margin-top: 2px;
 }
 
 .search .input_wrapper input {
-    background: var(--background);
     color: var(--subtitle);
-    line-height: 4.5em;
     outline: none;
     border: none;
 
     font-weight: 500;
+    font-size: 1.3em;
 
     height: 100%;
     width: 100%;
     padding: 26px 0;
-    /* transition: all .2s ease-in-out; */
 }
 
 .search .input_wrapper input::placeholder {
@@ -186,7 +251,6 @@ header .hamburger_btn div:not(.menu-is-open) {
     align-items: center;
 
     color: var(--placeholder);
-    /* transition: all .2s ease-in-out; */
 }
 
 .search .result_container {
@@ -198,27 +262,24 @@ header .hamburger_btn div:not(.menu-is-open) {
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* transition: all .2s ease-in-out; */
 
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .search .result_container p {
     width: 100%;
-    text-align: center;
+    text-align: left;
     margin: 10px;
 
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     color: var(--subtitle);
-    padding: 0 15px;
+    padding: 0 20px;
 
     font-family: 'Poppins', 'Inter';
     font-style: normal;
     font-size: 14px;
-    
-    /* transition: all .2s ease-in-out; */
 }
 
 .search .places_wrapper {
@@ -226,8 +287,8 @@ header .hamburger_btn div:not(.menu-is-open) {
     flex-direction: row;
     align-items: center;
     overflow-x: scroll;
-    height: 100px;
-    margin: 0 -30px;
+    height: 90px;
+    margin: 0 -20px;
 }
 
 .search .places_wrapper::-webkit-scrollbar {
@@ -236,13 +297,11 @@ header .hamburger_btn div:not(.menu-is-open) {
 }
 
 .search .places_wrapper .btn {
-    background: var(--background);
-    border: 1px solid var(--border);
+    /* box-shadow: 1px 2px 8px 0px var(--img-shadow); */
+    /* border: 1px solid var(--border); */
+    background: rgb(245, 245, 245);
     box-sizing: border-box;
-    /* box-shadow: 0px 1px 4px 0px var(--black-opaque-25); */
-    box-shadow: 1px 2px 8px 0px var(--img-shadow);
-    border-radius: 12px;
-    /* transition: all .2s ease-in-out; */
+    border-radius: 8px;
     
     height: 48px;
     width: fit-content;
@@ -256,17 +315,15 @@ header .hamburger_btn div:not(.menu-is-open) {
 }
 
 .search .places_wrapper .selected_btn {
-    background: var(--accent);
-    border: 1px solid var(--accent);
-
-    box-shadow: 2px 4px 10px 5px var(--img-shadow);
-    transform: scale(1.1);
+    /* box-shadow: 2px 4px 8px 1px var(--img-shadow); */
+    /* transform: scale(1.1); */
+    background: rgb(230, 230, 230);
     transition: all 0.2s ease-in-out;
 }
 
-.search .places_wrapper .selected_btn p {
+/* .search .places_wrapper .selected_btn p {
     color: var(--white-total) !important;
-}
+} */
 
 .search .places_wrapper .btn:first-child {
     margin-left: 30px;
@@ -286,7 +343,6 @@ header .hamburger_btn div:not(.menu-is-open) {
     margin: 0 20px;
 
     color: var(--subtitle);
-    /* transition: all .2s ease-in-out; */
 }
 
 
@@ -300,7 +356,6 @@ header .hamburger_btn div:not(.menu-is-open) {
     margin-top: 30px;
 
     color: var(--subtitle);
-    /* transition: all .2s ease-in-out; */
 }
 
 /* CATEGORIES */
@@ -310,11 +365,11 @@ header .hamburger_btn div:not(.menu-is-open) {
 }
 
 .categories h5 {
-    /* font-family: 'Inter', sans-serif; */
     font-family: 'Poppins', 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 18px;
+    font-size: clamp(15px, 4.5vw, 18px);
     line-height: 23px;
     display: flex;
     align-items: center;
@@ -324,7 +379,6 @@ header .hamburger_btn div:not(.menu-is-open) {
     margin-bottom: 20px;
     
     color: var(--title);
-    /* transition: all .2s ease-in-out; */
 }
 
 .categories .categories_wrapper {
@@ -343,10 +397,10 @@ header .hamburger_btn div:not(.menu-is-open) {
 
 .categories .categories_wrapper .btn {
     background: var(--background);
-    border: 1px solid var(--border);
+    border: 2px solid var(--border-alt);
     box-sizing: border-box;
     /* box-shadow: 0px 1px 4px 0px var(--black-opaque-25); */
-    box-shadow: 1px 2px 8px 0px var(--img-shadow);
+    /* box-shadow: 1px 2px 8px 0px var(--img-shadow); */
     border-radius: 12px;
     
     height: 48px;
@@ -361,17 +415,17 @@ header .hamburger_btn div:not(.menu-is-open) {
 }
 
 .categories .categories_wrapper .selected_btn {
-    background: var(--accent);
-    border: 1px solid var(--accent);
-
-    box-shadow: 2px 4px 10px 5px var(--img-shadow);
+    background: var(--white-total);
+    border-width: 1px;
+    box-shadow: 0 8px 12px -6px var(--img-shadow);
     transform: scale(1.1);
+
     transition: all 0.2s ease-in-out;
 }
 
-.categories .categories_wrapper .selected_btn p {
+/* .categories .categories_wrapper .selected_btn p {
     color: var(--white-total) !important;
-}
+} */
 
 .categories .categories_wrapper .btn:first-child {
     margin-left: 30px;
@@ -383,8 +437,6 @@ header .hamburger_btn div:not(.menu-is-open) {
     filter: drop-shadow(0px 4px 10px var(--black-opaque-25));
     padding: 8px;
     padding-right: 0;
-
-    /* transition: all .2s ease-in-out; */
 }
 
 .categories .categories_wrapper .btn p{
@@ -392,6 +444,7 @@ header .hamburger_btn div:not(.menu-is-open) {
     font-style: normal;
     font-weight: 500;
     font-size: 15px;
+    font-size: clamp(12px, 3.7vw, 15px);
     text-transform: capitalize;
     line-height: 27px;
 
@@ -400,7 +453,6 @@ header .hamburger_btn div:not(.menu-is-open) {
     margin: 0 20px;
 
     color: var(--subtitle);
-    /* transition: all .2s ease-in-out; */
 
     white-space: nowrap;
 }
@@ -408,12 +460,12 @@ header .hamburger_btn div:not(.menu-is-open) {
 /* MAP VIEW */
 
 .map {
-    padding-bottom: 50px;
+    padding-bottom: 70px;
     padding-top: 40px;
+    padding-top: 125px;
 }
 
 .map h5 {
-    /* font-family: 'Inter', sans-serif; */
     font-family: 'Poppins', 'Inter';
     font-style: normal;
     font-weight: 600;
@@ -425,7 +477,6 @@ header .hamburger_btn div:not(.menu-is-open) {
 
     margin-bottom: 20px;
     color: var(--title);
-    /* transition: all .2s ease-in-out; */
 }
 
 .map .map-container {
@@ -433,9 +484,8 @@ header .hamburger_btn div:not(.menu-is-open) {
     height: 90vw;
     border-radius: 12px;
 
-    /* box-shadow: 0px 0px 15px 7px var(--shadow) */
-    /* box-shadow: 0px 1px 4px 1px var(--black-opaque-25); */
-    box-shadow: 2px 4px 8px 1px var(--img-shadow);
+    /* box-shadow: 2px 4px 8px 1px var(--img-shadow); */
+    box-shadow: 0 6px 16px -6px var(--img-shadow);
 }
 
 /* FOOTER */
@@ -445,22 +495,22 @@ header .hamburger_btn div:not(.menu-is-open) {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .links a {
-    text-transform: capitalize;
+    text-transform: uppercase;
     color: var(--subtitle);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     font-family: 'Poppins', 'Inter';
-
-    /* font-size: 1.1em; */
+    font-size: clamp( 13px, 4vw, 16px);
+    font-size: small;
 }
 
 .links .dot {
-    width: 5px;
-    height: 5px; 
+    width: 4px;
+    height: 4px; 
     background: var(--subtitle); 
     border-radius: 50%;
     margin: 0 10px;
@@ -471,16 +521,21 @@ header .hamburger_btn div:not(.menu-is-open) {
     text-align: center;
     color: var(--subtitle);
     text-decoration: none;
+    text-transform: lowercase;
     font-weight: 500;
     font-family: 'Poppins', 'Inter';
-    font-size: 0.9em;
+    font-size: clamp( 13px, 4vw, 16px);
+    font-size: small;
 
     margin: 0;
-    padding: 15px 0;
+    padding: 30px 0 20px 0;
 }
 
 .footer p a {
     color: var(--subtitle);
+    text-transform: uppercase;
+    font-size: clamp( 13px, 4vw, 16px);
+    font-size: small;
     font-weight: 600;
 }
 

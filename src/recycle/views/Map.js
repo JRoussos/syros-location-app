@@ -8,6 +8,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import stores from './feat';
 import recycle_image from '../assets/green.png';
 
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY 
 
 const Map = ({ state}) => {
@@ -19,11 +21,12 @@ const Map = ({ state}) => {
 
     const darkMapStyle = "mapbox://styles/mapbox/dark-v10"
     const lightMapStyle = "mapbox://styles/mapbox/light-v10"
+    const streetMapStyle = "mapbox://styles/john632/ckmzgu65x04tt18ti0dmxdug7"
     
     const [ mapConfig, setMapConfig ] = useState({
-        center: [24.940336, 37.444246],
-        zoom: 14,
-        mapStyle: lightMapStyle
+        center: [24.943243, 37.443308],
+        zoom: 15,
+        mapStyle: streetMapStyle
     })
 
     useEffect(() => {
@@ -44,7 +47,7 @@ const Map = ({ state}) => {
                 const updatedConfig = {
                     center: prevConfig.center,
                     zoom: prevConfig.zoom,
-                    mapStyle: theme==='light' ? lightMapStyle : darkMapStyle
+                    mapStyle: theme==='light' ? streetMapStyle : darkMapStyle
                 }
 
                 return { ...prevConfig, ...updatedConfig }
