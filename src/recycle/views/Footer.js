@@ -11,7 +11,7 @@ const Footer = () => {
                 {/* <div className="dot"></div> */}
                 <a href="/">About</a>
             </div>
-            <p>Made with <img style={{width: "15px"}} src={heart} alt="heart"/> by <a href="https://johnroussos.me/">J.R.</a></p>
+            <p>Made with <img style={{width: "15px", marginBottom: "-2px"}} src={heart} alt="heart"/> by <a href="https://johnroussos.me/">J.R.</a></p>
         </footer>
     )
 }

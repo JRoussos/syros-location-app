@@ -1,9 +1,9 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 // import { useCollection } from 'react-firebase-hooks/firestore';
 
 import Header from './views/Header';
 import Menu from './views/Menu';
-import Title from './views/Title';
+import Title from './views/swipable-title';
 import Search from './views/Search';
 import Categories from './views/Categories';
 import Map from './views/Map';
@@ -37,6 +37,10 @@ const recycleReducer = (state, action) => {
 
 const Recycle = () => {
     const [state, dispatch] = useReducer( recycleReducer, initialState );
+
+    useEffect(() => {
+        // gsap.to('section', {delay: 1, force3D: true, duration: 0.5, opacity: 1, y: 20, ease: 'power2.inOut', stagger: 0.1})
+    }, [])
 
     return (
         <main className="background">

@@ -1,6 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import SwiperCore, { EffectFade } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
+import 'swiper/components/effect-fade/effect-fade.min.css';
+
+SwiperCore.use([ EffectFade ])
+
 const Svg  = () => (
     <svg style={{ padding: "6px 6px 0 0", marginTop: "5px", overflow: "visible" }} width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="8" cy="17" rx="6" ry="2" fill="url(#paint0_radial)"/>
@@ -25,20 +32,45 @@ const Svg  = () => (
     </svg>
 )
 
+const onSwipeProgressHandler = swiper => {
+
+}
+
+const onSwipeSlideChangeHandler = swiper => {
+    console.log(swiper);
+    const bullets = [...document.querySelectorAll('.pages_indicator div')]
+    const title = [...document.querySelectorAll('.title_wrapper h3')]
+    
+    bullets[swiper.previousIndex].classList.remove('active')
+    bullets[swiper.realIndex].classList.add('active')
+
+    title[swiper.previousIndex].classList.remove('active')
+    title[swiper.realIndex].classList.add('active')
+}
+
 const Title = () => {
     const { t } = useTranslation()
     return (
         <section className="title">
-            <h3>{t('header_title_start')}<br/>{t('header_title_continue')}</h3>
+            <div className="title_wrapper" style={{margin: "0 -20px", height: "110px"}}>
+                <h3 className="active">{t('header_title_start')}<br/>{t('header_title_continue_recycle')}</h3>
+                <h3>{t('header_title_start')}<br/>{t('header_title_continue_water')}</h3>
+                <h3>{t('header_title_start')}<br/>{t('header_title_continue_bus')}</h3>
+            </div>
             <div className="subtitle">
                 <Svg/>
                 <p>{t('header_location')}</p>
             </div>
             <div className="pages_indicator">
-                <div></div>
+                <div className="active"></div>
                 <div></div>
                 <div></div>
             </div>
+            <Swiper controller={{}} onSwiper={sw => console.log(sw)} onSlideChange={swiper => onSwipeSlideChangeHandler(swiper)} onProgress={ swiper => onSwipeProgressHandler(swiper)} effect="fade" style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: -1}}>
+                <SwiperSlide style={{width: 'auto'}}><div className="green"></div></SwiperSlide>
+                <SwiperSlide style={{width: 'auto'}}><div className="blue"></div></SwiperSlide>
+                <SwiperSlide style={{width: 'auto'}}><div className="beige"></div></SwiperSlide>
+            </Swiper>
         </section>
     )
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { gsap } from 'gsap';
 import firebase from '../../firebase_config';
 
 import mapboxgl from 'mapbox-gl';
@@ -7,10 +8,19 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import stores from './feat';
 import recycle_image from '../assets/green.png';
+import { showToast } from './Toast';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY 
+
+const geolocation = new mapboxgl.GeolocateControl({
+    trackUserLocation: true,
+    positionOptions: {
+        enableHighAccuracy: true,
+        timeout: 6000
+    }
+})
 
 const Map = ({ state}) => {
     const { location, category, theme } = state
@@ -67,9 +77,14 @@ const Map = ({ state}) => {
             antialias: true
         })
 
+        geolocation.on('error', err => {
+            showToast(err.message, 'error', 3000)
+        });
+
         mapInstance.current.on('load', () => {
             mapInstance.current.addControl( new mapboxgl.FullscreenControl(),'bottom-right')
-
+            mapInstance.current.addControl( geolocation, 'bottom-right')
+    
             mapInstance.current.loadImage( recycle_image, (error, image) => {
                 if (error) throw error;
                 mapInstance.current.addImage('recycle-marker', image);

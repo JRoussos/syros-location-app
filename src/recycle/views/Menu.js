@@ -1,14 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 import { useTranslation } from 'react-i18next';
-
-import us from '../assets/us.png';
-import el from '../assets/el.png';
-
-import sun from '../assets/sun.png';
-import moon from '../assets/moon.png';
 
 const Menu = ({ state, dispatch }) => {
     const { theme, local } = state
+    const menuRef = useRef(null)
     const { t, i18n } = useTranslation()
 
     const handleChangeLanguage = () => {
@@ -19,20 +15,36 @@ const Menu = ({ state, dispatch }) => {
     }
 
     const handleChangeTheme = () => {
-        document.body.classList.toggle('dark')
-        dispatch({ type: 'CHANGE_THEME', theme: theme==='light' ? 'dark' : 'light' })
+        // document.body.classList.toggle('dark')
+        // gsap.to('.checkbox', {duration: 0.3, marginLeft: 3, ease: 'power3.inOut'})
+        document.getElementsByClassName('checkbox')[0].classList.toggle('checked')
+        // dispatch({ type: 'CHANGE_THEME', theme: theme==='light' ? 'dark' : 'light' })
     }
 
+    useEffect(() => {
+        if(menuRef.current)
+            gsap.set('#container', {y: -menuRef.current.clientHeight})
+    }, [])
+
     return (
-        <div className="menu" style={{height: "250px"}}>
+        <div ref={menuRef} className="menu" style={{paddingTop: "85px", paddingBottom: "25px"}}>
             <div className="menu-elements">
                 <div className="menu-btn" onClick={handleChangeLanguage}>
-                    {local === 'en' ? <img src={us} alt="us-flag"/> : <img src={el} alt="el-flag"/>}
                     <p>{t('language')}</p>
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <p style={{color: 'var(--subtitle)', fontWeight: 400}}>English</p>
+                        <span></span>
+                    </div>
                 </div>
                 <div className="menu-btn" onClick={handleChangeTheme}>
-                    {theme === 'light' ? <img src={sun} alt="light mode"/> : <img src={moon} alt="dark mode"/> }    
                     <p>{t('theme')}</p>
+                    <div className="toggle_btn">
+                        <div className="checkbox"></div>
+                    </div>
+                </div>
+                <div className="menu-btn">
+                    <p>Install as an app</p>
+                    <span></span>
                 </div>
             </div>
         </div>

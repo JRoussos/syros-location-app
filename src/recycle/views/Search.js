@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { gsap } from 'gsap';
 import Toast, {showToast} from './Toast';
 
 const MAPBOX_KEY = process.env.REACT_APP_MAPBOX_KEY;
@@ -82,10 +83,16 @@ const Search = ({ state, dispatch }) => {
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" role="img">
                         <path fillRule="evenodd" clipRule="evenodd" d="M10.6002 12.0498C9.49758 12.8568 8.13777 13.3333 6.66667 13.3333C2.98477 13.3333 0 10.3486 0 6.66667C0 2.98477 2.98477 0 6.66667 0C10.3486 0 13.3333 2.98477 13.3333 6.66667C13.3333 8.15637 12.8447 9.53194 12.019 10.6419C12.0265 10.6489 12.0338 10.656 12.0411 10.6633L15.2935 13.9157C15.6841 14.3063 15.6841 14.9394 15.2935 15.33C14.903 15.7205 14.2699 15.7205 13.8793 15.33L10.6269 12.0775C10.6178 12.0684 10.6089 12.0592 10.6002 12.0498ZM11.3333 6.66667C11.3333 9.244 9.244 11.3333 6.66667 11.3333C4.08934 11.3333 2 9.244 2 6.66667C2 4.08934 4.08934 2 6.66667 2C9.244 2 11.3333 4.08934 11.3333 6.66667Z" fill="black" fillOpacity="0.35"></path>
                     </svg>
-                    {/* <svg width="34" height="36" viewBox="0 0 34 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M25.0118 30.2011C22.5042 31.7575 19.5437 32.6565 16.3727 32.6565C7.33032 32.6565 0 25.3461 0 16.3282C0 7.3104 7.33032 0 16.3727 0C25.4151 0 32.7455 7.3104 32.7455 16.3282C32.7455 20.6081 31.0944 24.5033 28.3928 27.415L33.2746 32.2836C34.1271 33.1338 34.1271 34.5123 33.2746 35.3625C32.4221 36.2127 31.0398 36.2127 30.1873 35.3625L25.0118 30.2011ZM29.0681 16.5C29.0681 23.4036 23.4564 29 16.5341 29C9.61169 29 4 23.4036 4 16.5C4 9.59644 9.61169 4 16.5341 4C23.4564 4 29.0681 9.59644 29.0681 16.5Z" fill="black" fillOpacity="0.35"/>
-                    </svg> */}
-                    <input ref={inputRef} type="text" placeholder={t('input_placeholder')} onChange={handleChangeInput} />
+                    <input ref={inputRef} type="text" placeholder={t('input_placeholder')} 
+                        onChange={handleChangeInput}
+                        onFocus={() => gsap.timeline()
+                            .to('#backdrop', {duration: 0.3, opacity: 1, zIndex: 9, ease: 'power2.inOut'})
+                            .to('.search_container', {duration: 0.3, boxShadow: '0px 8px 16px -6px var(--img-shadow)', scale: 1.05, ease: 'power2.inOut'}, '-0.3')
+                        }
+                        onBlur={() => gsap.timeline()
+                            .to('#backdrop', {duration: 0.3, opacity: 0, zIndex: -1, ease: 'power2.inOut'})
+                            .to('.search_container', {duration: 0.3, boxShadow: '0px 4px 12px -6px var(--img-shadow)', scale: 1, ease: 'power2.inOut'}, '-0.3')
+                        }/>
                 </div>
                 <div className="result_wrapper" style={{ height: focus ? 'auto' : '0px'}}>
                     <h5>Quick Results</h5>
