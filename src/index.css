@@ -49,18 +49,34 @@ body:not(.dark) {
   --title: var(--black-opaque-80);
   --subtitle: var(--black-opaque-60);
   --img-shadow: var(--black-opaque-25);
+
+  --menu-btn: var(--white-total);
+
+  --toggle-btn-background: rgba(0, 0, 0, 0.04);
+  --toggle-btn-check: rgba(0, 0, 0, 0.3);
+
+  --hamburger-btn: var(--white-total);
+  --hamburger-lines: var(--black-opaque-60);
 }
 
 .dark {
   --background: var(--dark-fill);
   --hamburger: var(--white-kinda);
-  --border: var(--border-gray);
+  --border: var(--white-opaque-35);
   --shadow: var(--dark-shadow);
   --placeholder: var(--white-opaque-35);
   --header: var(--white-total);
   --title: var(--white-total);
   --subtitle: var(--white-opaque-70);
   --img-shadow: var(--black-opaque-60);
+
+  --menu-btn: var(--dark-fill);
+
+  --toggle-btn-background: rgba(255, 255, 255, 0.2);
+  --toggle-btn-check: rgba(255, 255, 255, 0.4);
+
+  --hamburger-btn: rgb(46, 46, 46);
+  --hamburger-lines: rgba(255, 255, 255, 0.4);
 }
 
 body {
@@ -73,7 +89,7 @@ body {
   /* background: #1b1b1b; */
   background: var(--background);
   transition: all .2s ease-in-out;
-  transition-delay: 0.3s;
+  /* transition-delay: 0.3s; */
   overscroll-behavior: none;
 }
 

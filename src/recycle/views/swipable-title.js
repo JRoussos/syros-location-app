@@ -32,12 +32,7 @@ const Svg  = () => (
     </svg>
 )
 
-const onSwipeProgressHandler = swiper => {
-
-}
-
 const onSwipeSlideChangeHandler = swiper => {
-    console.log(swiper);
     const bullets = [...document.querySelectorAll('.pages_indicator div')]
     const title = [...document.querySelectorAll('.title_wrapper h3')]
     
@@ -66,7 +61,11 @@ const Title = () => {
                 <div></div>
                 <div></div>
             </div>
-            <Swiper controller={{}} onSwiper={sw => console.log(sw)} onSlideChange={swiper => onSwipeSlideChangeHandler(swiper)} onProgress={ swiper => onSwipeProgressHandler(swiper)} effect="fade" style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: -1}}>
+            <Swiper 
+                effect="fade"
+                onSlideChange={swiper => onSwipeSlideChangeHandler(swiper)}  
+                style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: -1}}
+            >
                 <SwiperSlide style={{width: 'auto'}}><div className="green"></div></SwiperSlide>
                 <SwiperSlide style={{width: 'auto'}}><div className="blue"></div></SwiperSlide>
                 <SwiperSlide style={{width: 'auto'}}><div className="beige"></div></SwiperSlide>

@@ -1,5 +1,4 @@
 import React, { useReducer, useEffect } from 'react';
-// import { useCollection } from 'react-firebase-hooks/firestore';
 
 import Header from './views/Header';
 import Menu from './views/Menu';
@@ -12,13 +11,12 @@ import Footer from './views/Footer';
 import './styles/recycle_styles.css';
 
 const initialState = {
-    theme: 'light',
+    isDark: localStorage.getItem('theme_dark')==='true' || false,
     local: 'en',
     location: [24.941304, 37.445081],
     syrosBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
     category: 'plastic'
 }
-
 
 const recycleReducer = (state, action) => {
     switch (action.type) {
@@ -27,7 +25,7 @@ const recycleReducer = (state, action) => {
         case 'CHANGE_TYPE':
             return { ...state, category: action.category }
         case 'CHANGE_THEME':
-            return { ...state, theme: action.theme }
+            return { ...state, isDark: action.isDark }
         case 'CHANGE_LOCAL': 
             return { ...state, local: action.local }
         default:
@@ -39,8 +37,8 @@ const Recycle = () => {
     const [state, dispatch] = useReducer( recycleReducer, initialState );
 
     useEffect(() => {
-        // gsap.to('section', {delay: 1, force3D: true, duration: 0.5, opacity: 1, y: 20, ease: 'power2.inOut', stagger: 0.1})
-    }, [])
+        document.body.classList.toggle('dark', state.isDark)
+    }, [state])
 
     return (
         <main className="background">
