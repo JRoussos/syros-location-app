@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { gsap } from 'gsap';
 import firebase from '../../firebase_config';
 
 import mapboxgl from 'mapbox-gl';
@@ -29,8 +28,8 @@ const Map = ({ state}) => {
     const mapInstance = useRef(null)
     const markerRef = useRef(new mapboxgl.Marker({ color: '#ec4e2c', scale: 0.7 }))
 
-    const darkMapStyle = "mapbox://styles/mapbox/dark-v10"
-    const lightMapStyle = "mapbox://styles/mapbox/light-v10"
+    // const darkMapStyle = "mapbox://styles/mapbox/dark-v10"
+    // const lightMapStyle = "mapbox://styles/mapbox/light-v10"
     const streetMapStyle = "mapbox://styles/john632/ckmzgu65x04tt18ti0dmxdug7"
     
     const [ mapConfig, setMapConfig ] = useState({
@@ -57,7 +56,7 @@ const Map = ({ state}) => {
                 const updatedConfig = {
                     center: prevConfig.center,
                     zoom: prevConfig.zoom,
-                    mapStyle: theme==='light' ? streetMapStyle : darkMapStyle
+                    mapStyle: streetMapStyle
                 }
 
                 return { ...prevConfig, ...updatedConfig }

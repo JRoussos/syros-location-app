@@ -53,12 +53,12 @@ const Menu = ({ state, dispatch }) => {
     }, [])
 
     return (
-        <div ref={menuRef} className="menu" style={{paddingTop: "80px", paddingBottom: "25px"}}>
+        <section ref={menuRef} className="menu">
             <div className="menu-elements">
                 <div className="menu-btn">
                     <p>{t('language')}</p>
                     <div style={{display: "flex", alignItems: "center"}} onClick={handleChangeLanguage}>
-                        <p style={{color: 'var(--subtitle)', fontWeight: 400}}>English</p>
+                        <p style={{color: 'var(--subtitle)', fontWeight: 400}}>{t(local)}</p>
                         <span></span>
                     </div>
                 </div>
@@ -73,7 +73,7 @@ const Menu = ({ state, dispatch }) => {
                     <span></span>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 export default Menu;

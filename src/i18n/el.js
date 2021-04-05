@@ -1,7 +1,7 @@
 const el = {
     translations: {
         'language': 'Γλώσσα',
-        'theme': 'Θέμα',
+        'theme': 'Σκούρο θέμα',
         'header_title_start': 'Δες που βρίσκεται',
         'header_title_continue_recycle': 'το πλησιέστερο σήμειο ανακύκλωσης.',
         'header_title_continue_water': 'ο πλησιέστερος σταθμός πόσιμου νερού.',
@@ -9,7 +9,9 @@ const el = {
         'header_location': 'Σύρος, Κυκλάδες, Ελλάδα',
         'input_placeholder': 'Αναζήτησε μια τοποθεσία..',
         'categories_title': 'Θέλω να ανακυκλώσω..',
-        'map_title': 'Χάρτης'
+        'map_title': 'Χάρτης',
+        'en': 'Αγγλικά',
+        'el': 'Ελληνικά'
     }
   }
   

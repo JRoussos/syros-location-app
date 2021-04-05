@@ -18,7 +18,7 @@ html {
   --white-opaque-70:  rgba(255, 255, 255, 0.7);
   --dark-shadow:      #151515;
   --dark-fill:        #1b1b1b;
-  --dark-fill-box:    #404040;
+  --dark-fill-alt:    #121212;
   --dark:             #2c2c2c;
   --light-grey:       #f0f2fa;
 
@@ -50,8 +50,6 @@ body:not(.dark) {
   --subtitle: var(--black-opaque-60);
   --img-shadow: var(--black-opaque-25);
 
-  --menu-btn: var(--white-total);
-
   --toggle-btn-background: rgba(0, 0, 0, 0.04);
   --toggle-btn-check: rgba(0, 0, 0, 0.3);
 
@@ -60,9 +58,9 @@ body:not(.dark) {
 }
 
 .dark {
-  --background: var(--dark-fill);
+  --background: var(--dark-fill-alt);
   --hamburger: var(--white-kinda);
-  --border: var(--white-opaque-35);
+  --border: var(--white-opaque-10);
   --shadow: var(--dark-shadow);
   --placeholder: var(--white-opaque-35);
   --header: var(--white-total);
@@ -70,12 +68,10 @@ body:not(.dark) {
   --subtitle: var(--white-opaque-70);
   --img-shadow: var(--black-opaque-60);
 
-  --menu-btn: var(--dark-fill);
-
   --toggle-btn-background: rgba(255, 255, 255, 0.2);
   --toggle-btn-check: rgba(255, 255, 255, 0.4);
 
-  --hamburger-btn: rgb(46, 46, 46);
+  --hamburger-btn: rgba(255, 255, 255, 0.05);
   --hamburger-lines: rgba(255, 255, 255, 0.4);
 }
 

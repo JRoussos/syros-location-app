@@ -85,8 +85,9 @@ const Search = ({ state, dispatch }) => {
                     </svg>
                     <input ref={inputRef} type="text" placeholder={t('input_placeholder')} 
                         onChange={handleChangeInput}
-                        onFocus={() => gsap.to('.search_container', {duration: 0.3, boxShadow: '0px 8px 16px -6px var(--img-shadow)', scale: 1.05, ease: 'power2.inOut'})}
-                        onBlur={() => gsap.to('.search_container', {duration: 0.3, boxShadow: '0px 4px 12px -6px var(--img-shadow)', scale: 1, ease: 'power2.inOut'})}/>
+                        // onFocus={() => gsap.to('.search_container', {duration: 0.3, boxShadow: '0px 8px 16px -6px var(--img-shadow)', scale: 1.05, ease: 'power2.inOut'})}
+                        // onBlur={() => gsap.to('.search_container', {duration: 0.3, boxShadow: '0px 4px 12px -6px var(--img-shadow)', scale: 1, ease: 'power2.inOut'})}
+                    />
                 </div>
                 <div className="result_wrapper" style={{ height: focus ? 'auto' : '0px'}}>
                     <h5>Quick Results</h5>

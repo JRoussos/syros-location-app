@@ -9,7 +9,9 @@ const en = {
         'header_location': 'Syros, Cyclades, Greece',
         'input_placeholder': 'Search for a location..',
         'categories_title': "I'm looking to recycle..",
-        'map_title': 'Map View'
+        'map_title': 'Map View',
+        'en': 'English',
+        'el': 'Greek'
     }
   }
   
