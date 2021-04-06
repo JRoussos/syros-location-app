@@ -3,7 +3,7 @@ import React, { useReducer, useEffect } from 'react';
 import Header from './views/Header';
 import Menu from './views/Menu';
 import Title from './views/swipable-title';
-import Search from './views/Search';
+import Search from './views/SearchBox';
 import Categories from './views/Categories';
 import Map from './views/Map';
 import Footer from './views/Footer';
@@ -12,7 +12,7 @@ import './styles/recycle_styles.css';
 
 const initialState = {
     isDark: localStorage.getItem('theme_dark')==='true' || false,
-    local: 'en',
+    local: localStorage.getItem('i18nextLng') || navigator.language.slice(0,2),
     location: [24.941304, 37.445081],
     syrosBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
     category: 'plastic'

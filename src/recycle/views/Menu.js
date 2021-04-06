@@ -48,9 +48,13 @@ const Menu = ({ state, dispatch }) => {
 
     useEffect(() => {
         if(menuRef.current)
-            gsap.set('#container', {y: -menuRef.current.clientHeight})
+            gsap.set('#container', {y: -menuRef.current.clientHeight-10})
             gsap.set('#container', {transition: "transform .3s cubic-bezier(0.4, 0, 0.2, 1)"})
     }, [])
+
+    // setTimeout(() => {
+    //     document.getElementById('install_btn').classList.remove('hidden');
+    // }, 2000);
 
     return (
         <section ref={menuRef} className="menu">

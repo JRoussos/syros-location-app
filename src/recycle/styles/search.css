@@ -1,0 +1,164 @@
+.search {
+    padding-top: 50px;
+
+    position: relative;
+    z-index: 100;
+}
+.search .input_wrapper {
+    border: 1px solid var(--border);
+    box-sizing: border-box;
+    border-radius: 10px;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    margin: -1px;
+    width: 100%;
+    box-shadow: 0px 4px 12px -6px var(--img-shadow);
+}
+.search .input_wrapper svg {
+    background: var(--hamburger-btn);
+    padding: 20px 25px;
+    padding: 28px 20px;
+}
+.search .input_wrapper input {
+    background: var(--hamburger-btn);
+    color: var(--subtitle);
+    outline: none;
+    border: none;
+
+    font-weight: 500;
+    font-size: 1.3em;
+
+    height: 100%;
+    width: 100%;
+    padding: 26px 0;
+}
+.search .input_wrapper input::placeholder {
+    font-family: 'Poppins', 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+
+    color: var(--placeholder);
+}
+
+.overlay {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    /* bottom: 0; */
+    /* right: 0;
+    top: 0;
+    left: 0; */
+    background: var(--background);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.overlay .close_btn::before {
+    width: 100%;
+}
+.overlay .close_btn {
+    float: right;
+    padding: 10px;
+    width: 25px;
+    height: 25px;
+}
+.overlay .search_container {
+    margin: 0 20px;
+}
+.overlay .result_wrapper {
+    margin: 0 -10px;
+    margin-top: 20px;
+}
+.overlay h5 {
+    color: var(--subtitle);
+    padding: 10px 0px 15px 20px; 
+    margin: 0;
+}
+.overlay .places_wrapper {
+    /* display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: scroll;
+    height: 90px;
+    margin: 0 -20px; */
+
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: right;
+}
+.overlay .places_wrapper::-webkit-scrollbar {
+    display: none;
+    width: 0;
+}
+.overlay .places_wrapper .btn {
+    background: var(--hamburger-btn);
+    border: 1px solid var(--border);
+    box-sizing: border-box;
+    border-radius: 10px;
+    
+    height: 48px;
+    width: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0 auto;
+    
+    margin-right: 20px;
+    margin: 5px;
+}
+.overlay .places_wrapper .btn p{
+    font-family: 'Poppins', 'Inter';
+    white-space: nowrap;
+    text-transform: capitalize;
+    text-align: center;
+    
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 27px;
+
+    margin: 0 10px;
+
+    color: var(--subtitle);
+}
+.overlay .result_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin: 15px 0;
+}
+.overlay .result_container p {
+    width: 100%;
+    text-align: left;
+    margin: 10px;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--subtitle);
+    padding: 0 15px;
+
+    font-family: 'Poppins', 'Inter';
+    font-size: 14px;
+    font-weight: 500;
+}
+.overlay .no_results {
+    font-family: 'Poppins', 'Inter';
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    
+    width: 100%;
+    color: var(--subtitle);
+}
