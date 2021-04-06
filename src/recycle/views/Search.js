@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { showToast } from './Toast';
-import { gsap } from 'gsap';
 
 const MAPBOX_KEY = process.env.REACT_APP_MAPBOX_KEY;
 
@@ -65,9 +64,8 @@ const Search = ({ state, dispatch,setVisible }) => {
     useEffect(() => {
         const storedSearches = JSON.parse(localStorage.getItem("storedSearches"))
         if(storedSearches){
-            setPlaces([ ...storedSearches, ...places ])
+            setPlaces(prevState => [ ...storedSearches, ...prevState ])
         }
-        // gsap.to(".btn", {opacity: 1, ease: "power2.inOut", stagger: { each: 0.05, from: "center", axis: "y", ease: "power2.inOut", grid: "auto"}}) 
     }, [])
 
     return createPortal(
@@ -81,8 +79,8 @@ const Search = ({ state, dispatch,setVisible }) => {
                 </div>
                 <div className="result_wrapper">
                     {inputRef.current && inputRef.current.value ? 
-                        <h5>Results based on: '{inputRef.current.value}'</h5> : <>
-                        <h5>Quick Results</h5>
+                        <h5>{t('results_based')} '{inputRef.current.value}'</h5> : <>
+                        <h5>{t('quick_results')}</h5>
                         <div id="places_wrappper" className="places_wrapper">
                             {places.map( (_, index) => (
                                 <div key={index} className="btn" onClick={() => handleLocationChange(_.location)}>
@@ -102,7 +100,7 @@ const Search = ({ state, dispatch,setVisible }) => {
                         }}>
                             <p>{feature.place_name}</p>
                         </div>
-                    )) : inputRef.current && inputRef.current.value && <p className="no_results">Nothing Found</p>}
+                    )) : inputRef.current && inputRef.current.value && <p className="no_results">{t('no_results')}</p>}
                 </div>
             </div>
         </div>, document.getElementById('root') 

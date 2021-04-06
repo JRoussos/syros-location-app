@@ -11,7 +11,10 @@ const en = {
         'categories_title': "I'm looking to recycle..",
         'map_title': 'Map View',
         'en': 'English',
-        'el': 'Greek'
+        'el': 'Greek',
+        'quick_results': 'Quick Results',
+        'results_based': 'Results based on: ',
+        'no_results': 'Nothing Found'
     }
   }
   

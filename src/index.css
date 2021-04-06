@@ -82,10 +82,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background: #1b1b1b; */
+  
   background: var(--background);
   transition: all .2s ease-in-out;
-  /* transition-delay: 0.3s; */
+  user-select: none;
+
   overscroll-behavior: none;
 }
 

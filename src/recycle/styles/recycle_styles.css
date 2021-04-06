@@ -23,6 +23,14 @@ article {
 .menu {
     padding-top: 80px; 
     padding-bottom: 25px;
+
+    /* grid */
+    overflow-x: hidden;
+    display: grid;
+    grid-template-columns: repeat(2, 100%);
+    grid-gap: 20px;
+
+    will-change: scroll-position;
 }
 .menu-elements {
     width: 100%;
@@ -79,6 +87,23 @@ article {
 .hidden {
     /* visibility: hidden !important; */
     display: none !important;
+}
+.menu-elements .menu-btn .lang_checkbox {
+    background: var(--toggle-btn-background);
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.05);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menu-elements .menu-btn .lang_checkbox .lang_checked {
+    width: 12px;
+    height: 12px;
+    background: var(--toggle-btn-check);
+    border-radius: 4px;
 }
 
 /* HEADER */
@@ -438,4 +463,8 @@ body:not(:not(.dark)) .map .map-container {
 @keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
+}
+@keyframes animateIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

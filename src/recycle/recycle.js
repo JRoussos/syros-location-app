@@ -14,6 +14,7 @@ const initialState = {
     isDark: localStorage.getItem('theme_dark')==='true' || false,
     local: localStorage.getItem('i18nextLng') || navigator.language.slice(0,2),
     location: [24.941304, 37.445081],
+    languages: [ 'en', 'el'],
     syrosBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
     category: 'plastic'
 }

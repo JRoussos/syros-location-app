@@ -21,11 +21,11 @@ const Menu = ({ state, dispatch }) => {
     const menuRef = useRef(null)
     const { t, i18n } = useTranslation()
 
-    const handleChangeLanguage = () => {
-        const changeTo = local==='en' ? 'el' : 'en'
+    const languages = [ 'en', 'el']
 
-        i18n.changeLanguage(changeTo)
-        dispatch({ type: 'CHANGE_LOCAL', local: changeTo })
+    const handleChangeLanguage = (lang) => {
+        i18n.changeLanguage(lang)
+        dispatch({ type: 'CHANGE_LOCAL', local: lang })
     }
 
     const handleChangeTheme = () => {
@@ -61,7 +61,13 @@ const Menu = ({ state, dispatch }) => {
             <div className="menu-elements">
                 <div className="menu-btn">
                     <p>{t('language')}</p>
-                    <div style={{display: "flex", alignItems: "center"}} onClick={handleChangeLanguage}>
+                    <div style={{display: "flex", alignItems: "center"}} onClick={() => {
+                        menuRef.current.scrollTo({ 
+                            left: menuRef.current.scrollWidth, 
+                            top: 0, 
+                            behavior: 'smooth'
+                        })}
+                    }>
                         <p style={{color: 'var(--subtitle)', fontWeight: 400}}>{t(local)}</p>
                         <span></span>
                     </div>
@@ -76,6 +82,23 @@ const Menu = ({ state, dispatch }) => {
                     <p>Install as an app</p>
                     <span></span>
                 </div>
+            </div>
+            <div className="menu-elements"> 
+                {languages.map( (lang, index) => (
+                    <div key={index} className="menu-btn" onClick={() => {
+                        handleChangeLanguage(lang)
+                        menuRef.current.scrollTo({ 
+                            left: 0, 
+                            top: 0, 
+                            behavior: 'smooth'
+                        })
+                    }}>
+                        <p>{t(lang)}</p>
+                        <div className="lang_checkbox">
+                            {lang===local ? <div className="lang_checked"></div> : null}
+                        </div>
+                    </div>
+                ))}
             </div>
         </section>
     )
