@@ -14,9 +14,11 @@ As every project, the idea behind this one started from an real life problem tha
 ### Technologies used
 
 - mapbox-gl
-- gsap 
 - firebase
 - react-firebase-hooks
+- react-router-dom
+- react-transition-group 
+- swiperjs
 
 ### What I learned 
 

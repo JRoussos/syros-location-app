@@ -5,7 +5,7 @@ import firebase from '../../firebase_config';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import stores from './feat';
+import recycle_spots from './feat';
 import recycle_image from '../assets/green.png';
 import { showToast } from './Toast';
 
@@ -22,16 +22,15 @@ const geolocation = new mapboxgl.GeolocateControl({
 })
 
 const Map = ({ state}) => {
-    const { location, category, theme } = state
+    const { location, category } = state
 
     const mapContainerRef = useRef(null)
     const mapInstance = useRef(null)
     const markerRef = useRef(new mapboxgl.Marker({ color: '#ec4e2c', scale: 0.7 }))
 
-    // const darkMapStyle = "mapbox://styles/mapbox/dark-v10"
-    // const lightMapStyle = "mapbox://styles/mapbox/light-v10"
     const streetMapStyle = "mapbox://styles/john632/ckmzgu65x04tt18ti0dmxdug7"
     
+    // eslint-disable-next-line
     const [ mapConfig, setMapConfig ] = useState({
         center: [24.943243, 37.443308],
         zoom: 15,
@@ -50,20 +49,20 @@ const Map = ({ state}) => {
         else return
     }, [location])
 
-    useEffect(() => {
-        if(mapInstance.current){
-            setMapConfig( prevConfig => { 
-                const updatedConfig = {
-                    center: prevConfig.center,
-                    zoom: prevConfig.zoom,
-                    mapStyle: streetMapStyle
-                }
+    // useEffect(() => {
+    //     if(mapInstance.current){
+    //         setMapConfig( prevConfig => { 
+    //             const updatedConfig = {
+    //                 center: prevConfig.center,
+    //                 zoom: prevConfig.zoom,
+    //                 mapStyle: streetMapStyle
+    //             }
 
-                return { ...prevConfig, ...updatedConfig }
-            })
-            // setMapConfig({ ...mapConfig, mapStyle: theme==='light' ? lightMapStyle : darkMapStyle })
-        }
-    }, [theme])
+    //             return { ...prevConfig, ...updatedConfig }
+    //         })
+    //         // setMapConfig({ ...mapConfig, mapStyle: theme==='light' ? lightMapStyle : darkMapStyle })
+    //     }
+    // }, [theme])
 
     useEffect(() => {
         mapInstance.current = new mapboxgl.Map({
@@ -91,7 +90,7 @@ const Map = ({ state}) => {
 
             mapInstance.current.addSource('locations', {
                 "type": "geojson",
-                "data": stores,
+                "data": recycle_spots,
                 "cluster": true,
                 "clusterMaxZoom": 14,
                 "clusterRadius": 20 
@@ -111,6 +110,7 @@ const Map = ({ state}) => {
         return () => mapInstance.current.remove()
     }, [mapConfig])
 
+    // eslint-disable-next-line
     const [ snapshot ] = useCollection(
         firebase.firestore().collection('recycle').where("type", "==", category), {
         snapshotListenOptions: { includeMetadataChanges: false },

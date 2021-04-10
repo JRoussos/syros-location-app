@@ -30,7 +30,6 @@ const Categories = ({ state, dispatch }) => {
     return (
         <section className="categories">
             <h5>{t('categories_title')}</h5>
-            {/* <p>I want to recycle: </p> */}
             <div className="categories_wrapper">
                 {btns_arrays.map( (_, index) => (
                     <div key={index} onClick={() => handleCategoryChange(index)} className={active === index ? "btn selected_btn" : "btn"}>
@@ -38,7 +37,7 @@ const Categories = ({ state, dispatch }) => {
                         <p>{local==='en' ? _.title_en : _.title_el}</p>
                     </div>
                 ))}
-                <div className="btn" style={{border: "1px solid transparent", marginLeft: "8px"}}></div>
+                <div className="btn"></div>
             </div>
         </section>
     )

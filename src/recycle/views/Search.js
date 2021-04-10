@@ -11,14 +11,14 @@ const Search = ({ state, dispatch,setVisible }) => {
 
     const [ results, setResults ] = useState([])
     const [ places, setPlaces ] = useState([
-        {name: 'Hermoupolis',   location: [24.941304, 37.445081], isRecentSeach: false}, 
-        {name: 'Ano Syros',     location: [24.936160, 37.449216], isRecentSeach: false}, 
-        {name: 'Galissas',      location: [24.882602, 37.421016], isRecentSeach: false}, 
-        {name: 'Finikas',       location: [24.880867, 37.398874], isRecentSeach: false}, 
-        {name: 'Poseidonia',    location: [24.886639, 37.389367], isRecentSeach: false}, 
-        {name: 'Vari',          location: [24.946256, 37.396470], isRecentSeach: false}, 
-        {name: 'Azolimnos',     location: [24.959405, 37.409883], isRecentSeach: false}, 
-        {name: 'Megas Gialos',  location: [24.909011, 37.380652], isRecentSeach: false}
+        {id: 941304, name: 'Hermoupolis',   location: [24.941304, 37.445081], isRecentSeach: false}, 
+        {id: 936160, name: 'Ano Syros',     location: [24.936160, 37.449216], isRecentSeach: false}, 
+        {id: 882602, name: 'Galissas',      location: [24.882602, 37.421016], isRecentSeach: false}, 
+        {id: 880867, name: 'Finikas',       location: [24.880867, 37.398874], isRecentSeach: false}, 
+        {id: 886639, name: 'Poseidonia',    location: [24.886639, 37.389367], isRecentSeach: false}, 
+        {id: 946256, name: 'Vari',          location: [24.946256, 37.396470], isRecentSeach: false}, 
+        {id: 959405, name: 'Azolimnos',     location: [24.959405, 37.409883], isRecentSeach: false}, 
+        {id: 909011, name: 'Megas Gialos',  location: [24.909011, 37.380652], isRecentSeach: false}
     ])
 
     const { syrosBounds, local } = state
@@ -56,7 +56,7 @@ const Search = ({ state, dispatch,setVisible }) => {
         let storedSearches = JSON.parse(localStorage.getItem("storedSearches"))
         if(!storedSearches) storedSearches = []
 
-        storedSearches.push({name: feature.text, location: feature.center, isRecentSeach: true})
+        storedSearches.push({id: feature.id, name: feature.matching_text || feature.text, location: feature.center, isRecentSeach: true})
         storedSearches.reverse()
         localStorage.setItem("storedSearches", JSON.stringify(storedSearches))
     }
@@ -82,9 +82,9 @@ const Search = ({ state, dispatch,setVisible }) => {
                         <h5>{t('results_based')} '{inputRef.current.value}'</h5> : <>
                         <h5>{t('quick_results')}</h5>
                         <div id="places_wrappper" className="places_wrapper">
-                            {places.map( (_, index) => (
-                                <div key={index} className="btn" onClick={() => handleLocationChange(_.location)}>
-                                    {_.isRecentSeach && <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            {places.map( _ => (
+                                <div key={_.id} className="btn" onClick={() => handleLocationChange(_.location)}>
+                                    {_.isRecentSeach && <svg style={{marginLeft: "10px"}} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10 0C4.48591 0 0 4.48591 0 10C0 15.5141 4.48591 20 10 20C15.5141 20 20 15.5141 20 10C20 4.48591 15.5141 0 10 0ZM10 17.8142C5.69113 17.8142 2.18579 14.3089 2.18579 10C2.18579 5.69135 5.69113 2.18579 10 2.18579C14.3089 2.18579 17.8142 5.69135 17.8142 10C17.8142 14.3089 14.3089 17.8142 10 17.8142Z" fill="var(--subtitle)"/>
                                         <path d="M10.8656 10.0121V5.82084C10.8656 5.35286 10.4864 4.97363 10.0186 4.97363C9.55065 4.97363 9.17139 5.35286 9.17139 5.82084V10.2827C9.17139 10.296 9.17467 10.3085 9.17531 10.3219C9.16417 10.5522 9.24353 10.7861 9.41947 10.9621L12.5747 14.1171C12.9056 14.448 13.442 14.448 13.7727 14.1171C14.1034 13.7861 14.1036 13.2497 13.7727 12.919L10.8656 10.0121Z" fill="var(--subtitle)"/>
                                     </svg>}
@@ -93,12 +93,12 @@ const Search = ({ state, dispatch,setVisible }) => {
                             ))}
                         </div>
                     </>} 
-                    {results.length ? results.map( (feature, index) => (
-                        <div className="result_container" key={index} onClick={() => { 
+                    {results.length ? results.map( feature => (
+                        <div className="result_container" key={feature.id} onClick={() => { 
                             handleLocationChange(feature.center) 
                             addToLocalStorage(feature)
                         }}>
-                            <p>{feature.place_name}</p>
+                            <p>{feature.matching_place_name || feature.place_name}</p>
                         </div>
                     )) : inputRef.current && inputRef.current.value && <p className="no_results">{t('no_results')}</p>}
                 </div>

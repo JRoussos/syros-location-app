@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { useTranslation } from 'react-i18next';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation } from 'swiper';
+
 window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault()
     window.deferredPrompt = event
@@ -15,6 +18,8 @@ window.addEventListener('appinstalled', () => {
     
     console.log(`'appinstalled' event was fired.`)
 })
+
+SwiperCore.use([Navigation]);
 
 const Menu = ({ state, dispatch }) => {
     const { isDark, local } = state
@@ -58,48 +63,37 @@ const Menu = ({ state, dispatch }) => {
 
     return (
         <section ref={menuRef} className="menu">
-            <div className="menu-elements">
-                <div className="menu-btn">
-                    <p>{t('language')}</p>
-                    <div style={{display: "flex", alignItems: "center"}} onClick={() => {
-                        menuRef.current.scrollTo({ 
-                            left: menuRef.current.scrollWidth, 
-                            top: 0, 
-                            behavior: 'smooth'
-                        })}
-                    }>
-                        <p style={{color: 'var(--subtitle)', fontWeight: 400}}>{t(local)}</p>
-                        <span></span>
-                    </div>
-                </div>
-                <div className="menu-btn">
-                    <p>{t('theme')}</p>
-                    <div className="toggle_btn" onClick={handleChangeTheme}>
-                        <div className={isDark ? "checkbox": "checkbox checked"}></div>
-                    </div>
-                </div>
-                <div id="install_btn" className="menu-btn hidden" onClick={handleInstall}>
-                    <p>Install as an app</p>
-                    <span></span>
-                </div>
-            </div>
-            <div className="menu-elements"> 
-                {languages.map( (lang, index) => (
-                    <div key={index} className="menu-btn" onClick={() => {
-                        handleChangeLanguage(lang)
-                        menuRef.current.scrollTo({ 
-                            left: 0, 
-                            top: 0, 
-                            behavior: 'smooth'
-                        })
-                    }}>
-                        <p>{t(lang)}</p>
-                        <div className="lang_checkbox">
-                            {lang===local ? <div className="lang_checked"></div> : null}
+            <Swiper spaceBetween={20} allowTouchMove={false} navigation={{nextEl: ".nextBtn", prevEl: ".prevBtn"}}>
+                <SwiperSlide className="menu-elements">
+                    <div className="menu-btn">
+                        <p>{t('language')}</p>
+                        <div style={{display: "flex", alignItems: "center"}} className="nextBtn">
+                            <p style={{color: 'var(--subtitle)', fontWeight: 400}}>{t(local)}</p>
+                            <span></span>
                         </div>
                     </div>
-                ))}
-            </div>
+                    <div className="menu-btn">
+                        <p>{t('theme')}</p>
+                        <div className="toggle_btn" onClick={handleChangeTheme}>
+                            <div className={isDark ? "checkbox": "checkbox checked"}></div>
+                        </div>
+                    </div>
+                    <div id="install_btn" className="menu-btn hidden" onClick={handleInstall}>
+                        <p>Install as an app</p>
+                        <span></span>
+                    </div>
+                </SwiperSlide>
+                <SwiperSlide className="menu-elements">
+                    {languages.map( (lang, index) => (
+                        <div key={index} className="menu-btn prevBtn" onClick={() => handleChangeLanguage(lang) }>
+                            <p>{t(lang)}</p>
+                            <div className="lang_checkbox">
+                                {lang===local ? <div className="lang_checked"></div> : null}
+                            </div>
+                        </div>
+                    ))}
+                </SwiperSlide>
+            </Swiper>
         </section>
     )
 }

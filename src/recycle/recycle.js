@@ -15,7 +15,7 @@ const initialState = {
     local: localStorage.getItem('i18nextLng') || navigator.language.slice(0,2),
     location: [24.941304, 37.445081],
     languages: [ 'en', 'el'],
-    syrosBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
+    syrosBounds: [[24.84, 37.35], [24.99, 37.52]],
     category: 'plastic'
 }
 
