@@ -118,7 +118,7 @@ const Map = ({ state}) => {
     })
 
     return (
-        <section id="map" className="map">
+        <section id="map" className="map animate-section">
             {/* <h5>{t('map_title')}</h5> */}
             <div className="map-container" ref={mapContainerRef}/>
         </section>

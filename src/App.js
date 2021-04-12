@@ -10,6 +10,7 @@ import Recycle from './recycle/recycle';
 import Header from './components/Header';
 import Menu from './components/Menu';
 import Title from './components/swipable-title';
+import Map from './recycle/views/Map';
 import Footer from './components/Footer';
 
 import './recycle/styles/recycle_styles.css';
@@ -54,16 +55,16 @@ const ContentAndTransitions = ({state, dispatch}) => {
                 <Transition key={routerLocation.key} appear timeout={{enter: 300, exit: 200}}
                     onEnter={(node, appears) => {
                         gsap.fromTo(
-                            node.querySelectorAll('.animate-section'), 
+                            '.animate-section', 
                             {x: `${100*state.swipeDirection}%`},
-                            {duration: 0.3, x: 0, ease: "back.out(1)", stagger: 0.05}
+                            {duration: 0.3, x: 0, opacity: 1, ease: "back.out(1)", stagger: 0.03}
                         )}
                     }
                     onExit={(node, appears) => {
                         gsap.fromTo(
-                            node.querySelectorAll('.animate-section'), 
+                            '.animate-section', 
                             {x: 0},
-                            {duration: 0.2, x: `${-40*state.swipeDirection}%`, opacity: 0, ease: "back.out(1)", stagger: 0.05}
+                            {duration: 0.2, x: `${-40*state.swipeDirection}%`, opacity: 0, ease: "back.out(1)", stagger: 0.02}
                         )}
                     }
                 >
@@ -94,6 +95,7 @@ const App = () => {
                     <Title state={state} dispatch={dispatch}/>
                     <ContentAndTransitions state={state} dispatch={dispatch}/>
                 </BrowserRouter>
+                <Map state={state}/>
                 <Footer/>
             </article>
         </main>
