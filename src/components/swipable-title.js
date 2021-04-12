@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 import SwiperCore, { EffectFade } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -32,19 +33,28 @@ const Svg  = () => (
     </svg>
 )
 
-const onSwipeSlideChangeHandler = swiper => {
-    const bullets = [...document.querySelectorAll('.pages_indicator div')]
-    const title = [...document.querySelectorAll('.title_wrapper h3')]
-    
-    bullets[swiper.previousIndex].classList.remove('active')
-    bullets[swiper.realIndex].classList.add('active')
-
-    title[swiper.previousIndex].classList.remove('active')
-    title[swiper.realIndex].classList.add('active')
-}
-
-const Title = () => {
+const Title = ({state, dispatch}) => {
+    const history = useHistory()
     const { t } = useTranslation()
+    const { links } = state
+
+    const onSwipeSlideChangeHandler = swiper => {
+        const bullets = [...document.querySelectorAll('.pages_indicator div')]
+        const title = [...document.querySelectorAll('.title_wrapper h3')]
+        
+        bullets[swiper.previousIndex].classList.remove('active')
+        bullets[swiper.realIndex].classList.add('active')
+    
+        title[swiper.previousIndex].classList.remove('active')
+        title[swiper.realIndex].classList.add('active')
+
+        // console.log(links[swiper.realIndex].path);
+        if(swiper.realIndex > swiper.previousIndex) dispatch({ type: 'CHANGE_SWIPE_DIRECTION', swipeDirection: "left"})
+        else dispatch({ type: 'CHANGE_SWIPE_DIRECTION', swipeDirection: "right"})
+
+        history.push(links[swiper.realIndex].path)
+    }
+
     return (
         <section className="title">
             <div className="title_wrapper" style={{margin: "0 -20px", height: "110px"}}>

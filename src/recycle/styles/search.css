@@ -1,8 +1,8 @@
 .search {
     padding-top: 50px;
-
+/* 
     position: relative;
-    z-index: 100;
+    z-index: 100; */
 }
 .search .input_wrapper {
     border: 1px solid var(--border);

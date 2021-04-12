@@ -7,7 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import recycle_spots from './feat';
 import recycle_image from '../assets/green.png';
-import { showToast } from './Toast';
+import { showToast } from '../../components/Toast';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
@@ -125,4 +125,4 @@ const Map = ({ state}) => {
     )
 }
 
-export default Map;
+export default React.memo(Map);

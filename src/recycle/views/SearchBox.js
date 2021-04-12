@@ -12,7 +12,7 @@ const SearchBox = ({ state, dispatch }) => {
     }, [isSearchVisible])
 
     return (
-        <section className="search">
+        <section className="search animate-section">
             {isSearchVisible && <Search setVisible={setVisible} state={state} dispatch={dispatch}/>}
             <div className="input_wrapper" onClick={() => setVisible(true)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" role="img">

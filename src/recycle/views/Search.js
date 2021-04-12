@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { showToast } from './Toast';
+import { showToast } from '../../components/Toast';
 
 const MAPBOX_KEY = process.env.REACT_APP_MAPBOX_KEY;
 
-const Search = ({ state, dispatch,setVisible }) => {
+const Search = ({ state, dispatch, setVisible }) => {
     const { t } = useTranslation()
     const inputRef = useRef()
 

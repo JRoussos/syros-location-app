@@ -29,8 +29,8 @@ const Categories = ({ state, dispatch }) => {
 
     return (
         <section className="categories">
-            <h5>{t('categories_title')}</h5>
-            <div className="categories_wrapper">
+            <h5 className="animate-section">{t('categories_title')}</h5>
+            <div className="categories_wrapper animate-section">
                 {btns_arrays.map( (_, index) => (
                     <div key={index} onClick={() => handleCategoryChange(index)} className={active === index ? "btn selected_btn" : "btn"}>
                         <img src={_.icon} alt={_.title}/>

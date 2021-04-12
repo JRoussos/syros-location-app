@@ -1,89 +1,103 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import React, { useReducer, useEffect } from 'react';
+import { BrowserRouter, Switch, Route, useLocation, Redirect } from 'react-router-dom';
+import { SwitchTransition, Transition } from 'react-transition-group';
+import { gsap } from 'gsap';
 
-import ReactMapboxGL, { Marker } from 'react-mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import Water from './water/water';
+import Stops from './bus_stop/bus_stop';
+import Recycle from './recycle/recycle';
 
-import firebase from './firebase_config';
-import './App.css';
-import marker from './recycle/assets/pushpin.png';
+import Header from './components/Header';
+import Menu from './components/Menu';
+import Title from './components/swipable-title';
+import Footer from './components/Footer';
 
-import mapboxgl from 'mapbox-gl';
+import './recycle/styles/recycle_styles.css';
 
-const Map = ReactMapboxGL({
-  // accessToken: process.env.REACT_APP_MAPBOX_KEY
-  accessToken: 'pk.eyJ1Ijoiam9objYzMiIsImEiOiJjazZtcm1mZm8waGs2M3VydWhvZjU2bXNrIn0.GCk0_AijdN89AK7LqqxgGw'
-});
-
-mapboxgl.accessToken = 'pk.eyJ1Ijoiam9objYzMiIsImEiOiJjazZtcm1mZm8waGs2M3VydWhvZjU2bXNrIn0.GCk0_AijdN89AK7LqqxgGw'
-
-const mapConfig = {
-  zoom: [15],
-  center: [ 24.94035310452929, 37.4449794111022 ],
-  style: "mapbox://styles/mapbox/dark-v10",
-  containerStyle: { width: "400px", height: "300px", borderRadius: "10px", outline: "none" }
+const initialState = {
+    isDark: localStorage.getItem('theme_dark')==='true' || false,
+    local: localStorage.getItem('i18nextLng') || navigator.language.slice(0,2),
+    location: [24.941304, 37.445081],
+    languages: [ 'en', 'el'],
+    syrosBounds: [ [24.84, 37.35], [24.99, 37.52] ],
+    category: 'plastic',
+    links: [
+      { path: '/recycle', name: 'Recycle Location', Component: Recycle },
+      { path: '/water', name: 'Potable Water', Component: Water },
+      { path: '/bus-stops', name: 'Bus Stops', Component: Stops },
+    ],
+    swipeDirection: 1
 }
 
-function App() {
-  const [ type, setType ] = useState('plastic')
-  const [ theme, setTheme ] = useState('dark')
-  const [ snapshot, loading, error ] = useCollection(
-    firebase.firestore().collection('recycle').where("type", "==", type), {
-    snapshotListenOptions: { includeMetadataChanges: false },
-    getOptions: { source: 'cache' }
-  })
+const appReducer = (state, action) => {
+    switch (action.type) {
+        case 'CHANGE_LOCATION':
+            return { ...state, location: action.location }
+        case 'CHANGE_TYPE':
+            return { ...state, category: action.category }
+        case 'CHANGE_THEME':
+            return { ...state, isDark: action.isDark }
+        case 'CHANGE_LOCAL': 
+            return { ...state, local: action.local }
+        case 'CHANGE_SWIPE_DIRECTION': 
+            return { ...state, swipeDirection: action.swipeDirection === "left" ? 1 : -1 }
+        default:
+            throw new Error();
+    }
+}
 
-  const mapContainerConfig = useRef(null)
-  const actualMap = useRef(null)
+const ContentAndTransitions = ({state, dispatch}) => {
+    const routerLocation = useLocation()
 
-  const [lng, setLng] = useState(5);
-  const [lat, setLat] = useState(34);
-  const [zoom, setZoom] = useState(1.5);
+    return(
+        <SwitchTransition>
+                <Transition key={routerLocation.key} appear timeout={{enter: 300, exit: 200}}
+                    onEnter={(node, appears) => {
+                        gsap.fromTo(
+                            node.querySelectorAll('.animate-section'), 
+                            {x: `${100*state.swipeDirection}%`},
+                            {duration: 0.3, x: 0, ease: "back.out(1)", stagger: 0.05}
+                        )}
+                    }
+                    onExit={(node, appears) => {
+                        gsap.fromTo(
+                            node.querySelectorAll('.animate-section'), 
+                            {x: 0},
+                            {duration: 0.2, x: `${-40*state.swipeDirection}%`, opacity: 0, ease: "back.out(1)", stagger: 0.05}
+                        )}
+                    }
+                >
+                <Switch location={routerLocation} key={routerLocation.key}>
+                    <Route exact path="/"><Redirect to="/recycle"/></Route>
+                    <Route exact path="/recycle" children={<Recycle state={state} dispatch={dispatch} /> }/>
+                    <Route exact path="/water" children={<Recycle state={state} dispatch={dispatch} /> } />
+                    <Route exact path="/bus-stops" children={<Recycle state={state} dispatch={dispatch} /> } />
+                </Switch>
+            </Transition>
+        </SwitchTransition>
+    )
+}
 
-  useEffect(() => {
-    actualMap.current = new mapboxgl.Map({
-      container: mapContainerConfig.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [lng, lat],
-      zoom: zoom
-    })
+const App = () => {
+    const [state, dispatch] = useReducer( appReducer, initialState );
 
-    actualMap.current.on('move', () => {
-      setLng(actualMap.current.getCenter().lng.toFixed(4));
-      setLat(actualMap.current.getCenter().lat.toFixed(4));
-      setZoom(actualMap.current.getZoom().toFixed(2));
-    })
+    useEffect(() => {
+        document.body.classList.toggle('dark', state.isDark)
+    }, [state])
 
-    return () => actualMap.current.remove()
-  }, [])
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={() => setType('plastic')}>Change to Plastic</button>
-        <button onClick={() => setType('glass')}>Change to Glass</button>
-        <button onClick={() => {actualMap.current.fitBounds([
-[32.958984, -5.353521],
-[43.50585, 5.615985]
-])}}>Change location</button>
-        <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark' )}>Toggle Theme</button>
-        {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {loading && <span>Collection: Loading...</span>}
-        {/* {snapshot && console.log(snapshot.docs[0].data())} */}
-        {/* {snapshot && snapshot.docs.map( doc => <p key={doc.id}> { JSON.stringify(doc.data()) } </p> )} */}
-        {/* <Map {...mapConfig} style={theme==='dark' ? "mapbox://styles/mapbox/dark-v10" : "mapbox://styles/mapbox/light-v10"}>
-          {snapshot && snapshot.docs.map( doc => (
-            <Marker coordinates={[doc.data().location._long, doc.data().location._lat]} anchor="bottom">
-              <img src={marker}/>
-            </Marker>
-          ))}
-        </Map> */}
-
-        <div style={{width: "100%", height: "400px", borderRadius: "8px", margin: "5px"}} className="map-container" ref={mapContainerConfig}/>
-
-      </header>
-    </div>
-  );
+    return (
+        <main className="background">
+            <Header/>
+            <article id="container">
+                <Menu state={state} dispatch={dispatch}/>
+                <BrowserRouter>
+                    <Title state={state} dispatch={dispatch}/>
+                    <ContentAndTransitions state={state} dispatch={dispatch}/>
+                </BrowserRouter>
+                <Footer/>
+            </article>
+        </main>
+    )
 }
 
 export default App;

@@ -25,6 +25,8 @@ As every project, the idea behind this one started from an real life problem tha
 - I learned how to use mapbox and what to avoid (for anyone reading this DON'T USE MAPBOX WRAPPERS FOR REACT. IT'S COMPLICATED AND IT DOES NOT WORTH THE TROUBLE).
 
 - Always prototyping the project before start coding, it saves you a lot of time.
+
+- I was looking for a way to animate different routes and my first thought of course was to use the amazing [react-transition-group](http://reactcommunity.org/react-transition-group/) library. But animating routes is a bit trickier as it turns out. The exit transition never gets a change to execute itself because the switch component just replace the previous route immediately. You can read more about that [here](https://css-tricks.com/animating-between-views-in-react/). After many frustrating days the solution was simple, just use the 'SwitchTransition' instead of the 'TransitionGroup'... It took me some time to even think about it because in all my googling it never came up. The moral in that story is always read at the docs first people!
   
 ### MIT License
 
