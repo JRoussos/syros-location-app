@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import SwiperCore, { EffectFade } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -35,7 +35,9 @@ const Svg  = () => (
 
 const Title = ({state, dispatch}) => {
     const history = useHistory()
+    const routerLocation = useLocation()
     const { t } = useTranslation()
+
     const { links } = state
 
     const onSwipeSlideChangeHandler = swiper => {
@@ -48,9 +50,8 @@ const Title = ({state, dispatch}) => {
         title[swiper.previousIndex].classList.remove('active')
         title[swiper.realIndex].classList.add('active')
 
-        // console.log(links[swiper.realIndex].path);
-        if(swiper.realIndex > swiper.previousIndex) dispatch({ type: 'CHANGE_SWIPE_DIRECTION', swipeDirection: "left"})
-        else dispatch({ type: 'CHANGE_SWIPE_DIRECTION', swipeDirection: "right"})
+        if(swiper.realIndex > swiper.previousIndex) dispatch({ type: 'CHANGE_SWIPE_DIRECTION', swipeDirection: 1})
+        else dispatch({ type: 'CHANGE_SWIPE_DIRECTION', swipeDirection: -1})
 
         history.push(links[swiper.realIndex].path)
     }
@@ -71,8 +72,9 @@ const Title = ({state, dispatch}) => {
                 <div></div>
                 <div></div>
             </div>
-            <Swiper 
+            <Swiper
                 effect="fade"
+                initialSlide={links.findIndex( link => link.path === routerLocation.pathname)}
                 onSlideChange={swiper => onSwipeSlideChangeHandler(swiper)}  
                 style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: -1}}
             >

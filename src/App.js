@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useRef } from 'react';
 import { BrowserRouter, Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import { SwitchTransition, Transition } from 'react-transition-group';
 import { gsap } from 'gsap';
@@ -41,7 +41,7 @@ const appReducer = (state, action) => {
         case 'CHANGE_LOCAL': 
             return { ...state, local: action.local }
         case 'CHANGE_SWIPE_DIRECTION': 
-            return { ...state, swipeDirection: action.swipeDirection === "left" ? 1 : -1 }
+            return { ...state, swipeDirection: action.swipeDirection }
         default:
             throw new Error();
     }
@@ -49,15 +49,16 @@ const appReducer = (state, action) => {
 
 const ContentAndTransitions = ({state, dispatch}) => {
     const routerLocation = useLocation()
+    const nodeRef = useRef() 
 
     return(
         <SwitchTransition>
-                <Transition key={routerLocation.key} appear timeout={{enter: 300, exit: 200}}
+                <Transition key={routerLocation.key} nodeRef={nodeRef} appear timeout={{enter: 300, exit: 200}}
                     onEnter={(node, appears) => {
                         gsap.fromTo(
                             '.animate-section', 
                             {x: `${100*state.swipeDirection}%`},
-                            {duration: 0.3, x: 0, opacity: 1, ease: "back.out(1)", stagger: 0.03}
+                            {duration: 0.3, x: 0, opacity: 1, ease: "back.out(1)", stagger: 0.02}
                         )}
                     }
                     onExit={(node, appears) => {
@@ -70,9 +71,9 @@ const ContentAndTransitions = ({state, dispatch}) => {
                 >
                 <Switch location={routerLocation} key={routerLocation.key}>
                     <Route exact path="/"><Redirect to="/recycle"/></Route>
-                    <Route exact path="/recycle" children={<Recycle state={state} dispatch={dispatch} /> }/>
-                    <Route exact path="/water" children={<Recycle state={state} dispatch={dispatch} /> } />
-                    <Route exact path="/bus-stops" children={<Recycle state={state} dispatch={dispatch} /> } />
+                    <Route exact path="/recycle" children={<Recycle forwardRef={nodeRef} state={state} dispatch={dispatch} /> }/>
+                    <Route exact path="/water" children={<Recycle forwardRef={nodeRef} state={state} dispatch={dispatch} /> } />
+                    <Route exact path="/bus-stops" children={<Recycle forwardRef={nodeRef} state={state} dispatch={dispatch} /> } />
                 </Switch>
             </Transition>
         </SwitchTransition>
