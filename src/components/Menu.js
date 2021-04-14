@@ -5,28 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 
-window.addEventListener('beforeinstallprompt', event => {
-    event.preventDefault()
-    window.deferredPrompt = event
-
-    document.getElementById('install_btn').classList.remove('hidden');
-    console.log(`'beforeinstallprompt' event was fired.`)
-})
-
-window.addEventListener('appinstalled', () => {
-    window.deferredPrompt = null;
-    
-    console.log(`'appinstalled' event was fired.`)
-})
-
 SwiperCore.use([Navigation]);
 
-const Menu = ({ state, dispatch }) => {
-    const { isDark, local } = state
+const Menu = ({ showMenu, state, dispatch }) => {
+    const { isDark, local, languages } = state
     const menuRef = useRef(null)
     const { t, i18n } = useTranslation()
-
-    const languages = [ 'en', 'el']
 
     const handleChangeLanguage = (lang) => {
         i18n.changeLanguage(lang)
@@ -47,19 +31,17 @@ const Menu = ({ state, dispatch }) => {
         await promptEvent.userChoice;
 
         window.deferredPrompt = null;
-
-        document.getElementById('install_btn').classList.add('hidden');
     }
 
     useEffect(() => {
         if(menuRef.current)
-            gsap.set('#container', {y: -menuRef.current.clientHeight-10})
+            gsap.set('#container', {y: showMenu ? 0 : -menuRef.current.clientHeight-10})
             gsap.set('#container', {transition: "transform .3s cubic-bezier(0.4, 0, 0.2, 1)"})
-    }, [])
+    }, [showMenu])
 
     // setTimeout(() => {
-    //     document.getElementById('install_btn').classList.remove('hidden');
-    // }, 2000);
+    //     window.deferredPrompt = {active: true}
+    // }, 3000);
 
     return (
         <section ref={menuRef} className="menu">
@@ -78,10 +60,10 @@ const Menu = ({ state, dispatch }) => {
                             <div className={isDark ? "checkbox": "checkbox checked"}></div>
                         </div>
                     </div>
-                    <div id="install_btn" className="menu-btn hidden" onClick={handleInstall}>
+                    {window.deferredPrompt && <div id="install_btn" className="menu-btn" onClick={handleInstall}>
                         <p>Install as an app</p>
                         <span></span>
-                    </div>
+                    </div>}
                 </SwiperSlide>
                 <SwiperSlide className="menu-elements">
                     {languages.map( (lang, index) => (

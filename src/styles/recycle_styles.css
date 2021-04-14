@@ -59,7 +59,7 @@ article {
     width: 50px;
     height: 26px;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.05);
+    box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.1);
 }
 .menu-elements .menu-btn .toggle_btn .checkbox {
     width: 20px;
@@ -67,8 +67,8 @@ article {
     margin-left: 27px;
     margin-top: 3px;
     background: var(--toggle-btn-check);
-    border-radius: 8px;
-    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
     transition: margin 0.5s cubic-bezier(0.38, 0.24, 0.28, 1.17);
 }
 .checked {
@@ -84,8 +84,8 @@ article {
     background: var(--toggle-btn-background);
     width: 20px;
     height: 20px;
-    border-radius: 6px;
-    box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.08);
 
     display: flex;
     justify-content: center;
@@ -95,7 +95,7 @@ article {
     width: 12px;
     height: 12px;
     background: var(--toggle-btn-check);
-    border-radius: 4px;
+    border-radius: 50%;
 }
 
 /* HEADER */
@@ -264,6 +264,9 @@ header .hamburger_btn div:not(.menu-is-open) {
     border-radius: 12px;
 
     box-shadow: 0 6px 16px -6px var(--img-shadow);
+}
+.map .mapboxgl-map:-webkit-full-screen {
+    border-radius: 0px;
 }
 body:not(:not(.dark)) .map .map-container {
     filter: brightness(.7) contrast(1.2);

@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useRef } from 'react';
+import React, { useReducer, useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import { SwitchTransition, Transition } from 'react-transition-group';
 import { gsap } from 'gsap';
@@ -12,22 +12,36 @@ import Menu from './components/Menu';
 import Title from './components/swipable-title';
 import Map from './recycle/views/Map';
 import Footer from './components/Footer';
+import Toast from './components/Toast';
 
-import './recycle/styles/recycle_styles.css';
+import './styles/recycle_styles.css';
+
+window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault()
+    window.deferredPrompt = event
+
+    console.log(`'beforeinstallprompt' event was fired.`)
+})
+
+window.addEventListener('appinstalled', () => {
+    window.deferredPrompt = null;
+    
+    console.log(`'appinstalled' event was fired.`)
+})
 
 const initialState = {
     isDark: localStorage.getItem('theme_dark')==='true' || false,
-    local: localStorage.getItem('i18nextLng') || navigator.language.slice(0,2),
+    local: localStorage.getItem('i18nextLng').slice(0,2) || navigator.language.slice(0,2),
     location: [24.941304, 37.445081],
     languages: [ 'en', 'el'],
     syrosBounds: [ [24.84, 37.35], [24.99, 37.52] ],
     category: 'plastic',
     links: [
-      { path: '/recycle', name: 'Recycle Location', Component: Recycle },
-      { path: '/water', name: 'Potable Water', Component: Water },
-      { path: '/bus-stops', name: 'Bus Stops', Component: Stops },
+      { path: '/recycle', title: 'header_title_continue_recycle', Component: Recycle },
+      { path: '/water', title: 'header_title_continue_water', Component: Water },
+      { path: '/buses', title: 'header_title_continue_bus', Component: Stops },
     ],
-    swipeDirection: 1
+    swipeDirection: 0
 }
 
 const appReducer = (state, action) => {
@@ -72,8 +86,8 @@ const ContentAndTransitions = ({state, dispatch}) => {
                 <Switch location={routerLocation} key={routerLocation.key}>
                     <Route exact path="/"><Redirect to="/recycle"/></Route>
                     <Route exact path="/recycle" children={<Recycle forwardRef={nodeRef} state={state} dispatch={dispatch} /> }/>
-                    <Route exact path="/water" children={<Recycle forwardRef={nodeRef} state={state} dispatch={dispatch} /> } />
-                    <Route exact path="/bus-stops" children={<Recycle forwardRef={nodeRef} state={state} dispatch={dispatch} /> } />
+                    <Route exact path="/water" children={<Water forwardRef={nodeRef} state={state} dispatch={dispatch} /> } />
+                    <Route exact path="/buses" children={<Stops forwardRef={nodeRef} state={state} dispatch={dispatch} /> } />
                 </Switch>
             </Transition>
         </SwitchTransition>
@@ -82,6 +96,7 @@ const ContentAndTransitions = ({state, dispatch}) => {
 
 const App = () => {
     const [state, dispatch] = useReducer( appReducer, initialState );
+    const [ showMenu, setMenuVisibility ] = useState(false)
 
     useEffect(() => {
         document.body.classList.toggle('dark', state.isDark)
@@ -89,15 +104,16 @@ const App = () => {
 
     return (
         <main className="background">
-            <Header/>
+            <Header showMenu={showMenu} setMenuVisibility={setMenuVisibility}/>
             <article id="container">
-                <Menu state={state} dispatch={dispatch}/>
+                <Menu showMenu={showMenu} state={state} dispatch={dispatch}/>
                 <BrowserRouter>
                     <Title state={state} dispatch={dispatch}/>
                     <ContentAndTransitions state={state} dispatch={dispatch}/>
+                    <Map state={state}/>
                 </BrowserRouter>
-                <Map state={state}/>
                 <Footer/>
+                <Toast/>
             </article>
         </main>
     )

@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 
-function Bus_Stops() {
+import Search from '../recycle/views/SearchBox';
+import BusTypes from './views/BusTypes';
+
+import '../styles/recycle_styles.css';
+
+const Recycle = ({state, dispatch, forwardRef}) => {
+
+    useEffect(() => {
+        dispatch({ type: 'CHANGE_TYPE', category: 'bus' })
+    }, [])
+    
     return (
-        <section className="tabs_position menu" data-page="bus-stops">
-            <div className="menu-elements">
-                <h3 className="animate-section">Bus Stops</h3>
-                <div style={{height: '48px', background: 'var(--black-opaque-35)'}} className="animate-section menu-btn">1</div>
-                <div style={{height: '48px', background: 'var(--black-opaque-35)'}} className="animate-section menu-btn">2</div>
-                <div style={{height: '48px', background: 'var(--black-opaque-35)'}} className="animate-section menu-btn">3</div>
-                <div style={{height: '48px', background: 'var(--black-opaque-35)'}} className="animate-section menu-btn">4</div>
-                <div style={{height: '48px', background: 'var(--black-opaque-35)'}} className="animate-section menu-btn">5</div>
-            </div>
+        <section ref={forwardRef} className="tabs_position">
+            <BusTypes state={state} dispatch={dispatch}/>
+            <Search state={state} dispatch={dispatch}/>
         </section>
     )
 }
 
-export default Bus_Stops
+export default Recycle;

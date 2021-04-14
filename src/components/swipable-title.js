@@ -53,7 +53,7 @@ const Title = ({state, dispatch}) => {
         if(swiper.realIndex > swiper.previousIndex) dispatch({ type: 'CHANGE_SWIPE_DIRECTION', swipeDirection: 1})
         else dispatch({ type: 'CHANGE_SWIPE_DIRECTION', swipeDirection: -1})
 
-        history.push(links[swiper.realIndex].path)
+        history.replace(links[swiper.realIndex].path)
     }
 
     return (

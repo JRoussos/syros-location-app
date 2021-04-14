@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Syros Spots",
+  "name": "Find where is everything in Syros.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,26 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#fbfbfb",
+  "background_color": "#fbfbfb",
+  "shortcuts" : [
+    {
+      "name": "Recycle Points",
+      "short_name": "Recycle",
+      "url": "/recycle",
+      "description": "Find where is the nearest recycle point."
+    },
+    {
+      "name": "Potable Water Stations",
+      "short_name": "Potable Water",
+      "url": "/water",
+      "description": "Find where is the nearestpotable water spot."
+    },
+    {
+      "name": "Bus Stops",
+      "short_name": "Bus Stops",
+      "url": "/bus-stops",
+      "description": "Find where is the nearest bus stop."
+    }
+  ]
 }

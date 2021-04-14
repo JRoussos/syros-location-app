@@ -31,10 +31,10 @@ const Categories = ({ state, dispatch }) => {
         <section className="categories">
             <h5 className="animate-section">{t('categories_title')}</h5>
             <div className="categories_wrapper animate-section">
-                {btns_arrays.map( (_, index) => (
-                    <div key={index} onClick={() => handleCategoryChange(index)} className={active === index ? "btn selected_btn" : "btn"}>
-                        <img src={_.icon} alt={_.title}/>
-                        <p>{local==='en' ? _.title_en : _.title_el}</p>
+                {btns_arrays.map( (btn, index) => (
+                    <div key={Math.random()} onClick={() => handleCategoryChange(index)} className={active === index ? "btn selected_btn" : "btn"}>
+                        <img src={btn.icon} alt={btn.title_en}/>
+                        <p>{local==='en' ? btn.title_en : btn.title_el}</p>
                     </div>
                 ))}
                 <div className="btn"></div>

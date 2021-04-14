@@ -5,9 +5,10 @@ import firebase from '../../firebase_config';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import recycle_spots from './feat';
 import recycle_image from '../assets/green.png';
 import { showToast } from '../../components/Toast';
+
+import { useLocation } from 'react-router-dom';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
@@ -21,22 +22,35 @@ const geolocation = new mapboxgl.GeolocateControl({
     }
 })
 
+geolocation.on('error', err => {
+    showToast(err.message, 'error', 3000)
+});
+
 const Map = ({ state}) => {
-    const { location, category } = state
+    const routerLocation = useLocation()
+    console.log(routerLocation);
+
+    const { location, syrosBounds, category } = state
 
     const mapContainerRef = useRef(null)
     const mapInstance = useRef(null)
     const markerRef = useRef(new mapboxgl.Marker({ color: '#ec4e2c', scale: 0.7 }))
 
+    const features = useRef([])
+
     const streetMapStyle = "mapbox://styles/john632/ckmzgu65x04tt18ti0dmxdug7"
     
     // eslint-disable-next-line
     const [ mapConfig, setMapConfig ] = useState({
-        center: [24.943243, 37.443308],
+        center: location,
+        maxBounds: syrosBounds,
         zoom: 15,
         mapStyle: streetMapStyle
     })
 
+    /**
+     * Go to location on state.location change
+     */
     useEffect(() => {
         if(mapInstance.current){
             mapInstance.current.flyTo({ 
@@ -49,35 +63,58 @@ const Map = ({ state}) => {
         else return
     }, [location])
 
-    // useEffect(() => {
-    //     if(mapInstance.current){
-    //         setMapConfig( prevConfig => { 
-    //             const updatedConfig = {
-    //                 center: prevConfig.center,
-    //                 zoom: prevConfig.zoom,
-    //                 mapStyle: streetMapStyle
-    //             }
+    const [ snapshot, loading, error ] = useCollection(
+        firebase.firestore().collection(routerLocation.pathname.slice(1)), {
+        snapshotListenOptions: { includeMetadataChanges: false },
+        getOptions: { source: 'cache' }
+    })
 
-    //             return { ...prevConfig, ...updatedConfig }
-    //         })
-    //         // setMapConfig({ ...mapConfig, mapStyle: theme==='light' ? lightMapStyle : darkMapStyle })
-    //     }
-    // }, [theme])
+    if(error) {
+        showToast(JSON.stringify(error), 'error', 3000)
+    }
 
+    /**
+     * When user changes category  
+     */
+    if(mapInstance.current && !loading){
+        features.current = []
+
+        snapshot.docs.forEach(doc => {
+            if(doc.data().type === category) features.current.push({
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        doc.data().coordinates.latitude, 
+                        doc.data().coordinates.longitude
+                    ]
+                },
+                "properties": {
+                    "name": doc.data().name
+                }
+            })
+        })
+
+        const map_source = mapInstance.current.getSource("locations")
+        if(map_source) map_source.setData({
+            "type": "FeatureCollection",
+            "features": features.current
+        })
+    }
+
+    /**
+     * On first Render. Initialize the map and add layer
+     */
     useEffect(() => {
         mapInstance.current = new mapboxgl.Map({
             container: mapContainerRef.current,
             style: mapConfig.mapStyle,
             center: mapConfig.center,
             zoom: mapConfig.zoom,
-            maxBounds: [[24.844369, 37.356365], [24.993442, 37.521599]],
+            maxBounds: mapConfig.maxBounds,
             attributionControl: false,
             antialias: true
         })
-
-        geolocation.on('error', err => {
-            showToast(err.message, 'error', 3000)
-        });
 
         mapInstance.current.on('load', () => {
             mapInstance.current.addControl( new mapboxgl.FullscreenControl(),'bottom-right')
@@ -90,7 +127,10 @@ const Map = ({ state}) => {
 
             mapInstance.current.addSource('locations', {
                 "type": "geojson",
-                "data": recycle_spots,
+                "data": {
+                    "type": "FeatureCollection",
+                    "features": features.current
+                },
                 "cluster": true,
                 "clusterMaxZoom": 14,
                 "clusterRadius": 20 
@@ -110,16 +150,8 @@ const Map = ({ state}) => {
         return () => mapInstance.current.remove()
     }, [mapConfig])
 
-    // eslint-disable-next-line
-    const [ snapshot ] = useCollection(
-        firebase.firestore().collection('recycle').where("type", "==", category), {
-        snapshotListenOptions: { includeMetadataChanges: false },
-        getOptions: { source: 'cache' }
-    })
-
     return (
         <section id="map" className="map animate-section">
-            {/* <h5>{t('map_title')}</h5> */}
             <div className="map-container" ref={mapContainerRef}/>
         </section>
     )

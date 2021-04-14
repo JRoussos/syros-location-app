@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Hamburger = () => {
+const Hamburger = ({showMenu, setMenuVisibility}) => {
     return (
         <div className="hamburger_wrapper">
             <div className="hamburger_btn" onClick={ e => {
-                document.getElementById('container').classList.toggle('open')
+                setMenuVisibility(!showMenu)
                 e.currentTarget.childNodes.forEach(el => el.classList.toggle('menu-is-open'))
             }}>
                 <div></div>
@@ -15,10 +15,10 @@ const Hamburger = () => {
     )
 }
 
-const Header = () => {
+const Header = ({showMenu, setMenuVisibility}) => {
     return (
         <header>
-            <Hamburger/>
+            <Hamburger showMenu={showMenu} setMenuVisibility={setMenuVisibility}/>
         </header>
     )
 }

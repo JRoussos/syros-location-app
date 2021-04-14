@@ -48,7 +48,7 @@
 }
 .categories .categories_wrapper .selected_btn {
     background: var(--hamburger-btn);
-    border-width: 1px;
+    border: none;
     box-shadow: 0 8px 12px -6px var(--img-shadow);
     transform: scale(1.1);
 
