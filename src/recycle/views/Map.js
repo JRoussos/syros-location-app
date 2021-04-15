@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import firebase from '../../firebase_config';
 
@@ -28,8 +28,6 @@ geolocation.on('error', err => {
 
 const Map = ({ state}) => {
     const routerLocation = useLocation()
-    console.log(routerLocation);
-
     const { location, syrosBounds, category } = state
 
     const mapContainerRef = useRef(null)
@@ -63,44 +61,48 @@ const Map = ({ state}) => {
         else return
     }, [location])
 
+    const collection_name = routerLocation.pathname.slice(1) || "recycle"
     const [ snapshot, loading, error ] = useCollection(
-        firebase.firestore().collection(routerLocation.pathname.slice(1)), {
-        snapshotListenOptions: { includeMetadataChanges: false },
-        getOptions: { source: 'cache' }
-    })
+        firebase.firestore().collection(collection_name), {
+            snapshotListenOptions: { includeMetadataChanges: false },
+            getOptions: { source: 'cache' }
+        }
+    )
 
-    if(error) {
-        showToast(JSON.stringify(error), 'error', 3000)
-    }
+    if(error) showToast(JSON.stringify(error), 'error', 3000)
 
+    const snapshot_data = useMemo(() => snapshot, [snapshot])    
+    
     /**
      * When user changes category  
      */
-    if(mapInstance.current && !loading){
-        features.current = []
-
-        snapshot.docs.forEach(doc => {
-            if(doc.data().type === category) features.current.push({
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        doc.data().coordinates.latitude, 
-                        doc.data().coordinates.longitude
-                    ]
-                },
-                "properties": {
-                    "name": doc.data().name
-                }
+    useEffect(() => {
+        if(mapInstance.current && !loading){
+            features.current = []
+    
+            snapshot_data.forEach(doc => {
+                if(doc.data().type === category) features.current.push({
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            doc.data().coordinates.latitude, 
+                            doc.data().coordinates.longitude
+                        ]
+                    },
+                    "properties": {
+                        "name": doc.data().name
+                    }
+                })
             })
-        })
-
-        const map_source = mapInstance.current.getSource("locations")
-        if(map_source) map_source.setData({
-            "type": "FeatureCollection",
-            "features": features.current
-        })
-    }
+    
+            const map_source = mapInstance.current.getSource("locations")
+            if(map_source) map_source.setData({
+                "type": "FeatureCollection",
+                "features": features.current
+            })
+        }
+    }, [category, snapshot_data, loading])
 
     /**
      * On first Render. Initialize the map and add layer

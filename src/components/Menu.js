@@ -39,9 +39,9 @@ const Menu = ({ showMenu, state, dispatch }) => {
             gsap.set('#container', {transition: "transform .3s cubic-bezier(0.4, 0, 0.2, 1)"})
     }, [showMenu])
 
-    // setTimeout(() => {
-    //     window.deferredPrompt = {active: true}
-    // }, 3000);
+    setTimeout(() => {
+        window.deferredPrompt = {active: true}
+    }, 3000);
 
     return (
         <section ref={menuRef} className="menu">
@@ -50,7 +50,7 @@ const Menu = ({ showMenu, state, dispatch }) => {
                     <div className="menu-btn">
                         <p>{t('language')}</p>
                         <div style={{display: "flex", alignItems: "center"}} className="nextBtn">
-                            <p style={{color: 'var(--subtitle)', fontWeight: 400}}>{t(local)}</p>
+                            <p style={{color: 'var(--subtitle)', fontWeight: 400}}>{t(local.slice(0,2))}</p>
                             <span></span>
                         </div>
                     </div>
@@ -70,7 +70,7 @@ const Menu = ({ showMenu, state, dispatch }) => {
                         <div key={index} className="menu-btn prevBtn" onClick={() => handleChangeLanguage(lang) }>
                             <p>{t(lang)}</p>
                             <div className="lang_checkbox">
-                                {lang===local ? <div className="lang_checked"></div> : null}
+                                {lang===local.slice(0,2) ? <div className="lang_checked"></div> : null}
                             </div>
                         </div>
                     ))}

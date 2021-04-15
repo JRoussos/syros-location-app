@@ -34,7 +34,7 @@ const Categories = ({ state, dispatch }) => {
                 {btns_arrays.map( (btn, index) => (
                     <div key={Math.random()} onClick={() => handleCategoryChange(index)} className={active === index ? "btn selected_btn" : "btn"}>
                         <img src={btn.icon} alt={btn.title_en}/>
-                        <p>{local==='en' ? btn.title_en : btn.title_el}</p>
+                        <p>{local.slice(0,2)==='en' ? btn.title_en : btn.title_el}</p>
                     </div>
                 ))}
                 <div className="btn"></div>

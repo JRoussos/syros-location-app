@@ -9,7 +9,7 @@ const Recycle = ({state, dispatch, forwardRef}) => {
 
     useEffect(() => {
         dispatch({ type: 'CHANGE_TYPE', category: 'plastic' })
-    }, [])
+    }, [dispatch])
 
     return (
         <section ref={forwardRef} className="tabs_position">

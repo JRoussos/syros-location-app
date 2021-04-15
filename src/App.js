@@ -19,19 +19,17 @@ import './styles/recycle_styles.css';
 window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault()
     window.deferredPrompt = event
-
-    console.log(`'beforeinstallprompt' event was fired.`)
 })
 
 window.addEventListener('appinstalled', () => {
     window.deferredPrompt = null;
-    
-    console.log(`'appinstalled' event was fired.`)
 })
 
+const areCookiesEnabled = navigator.cookieEnabled
+
 const initialState = {
-    isDark: localStorage.getItem('theme_dark')==='true' || false,
-    local: localStorage.getItem('i18nextLng').slice(0,2) || navigator.language.slice(0,2),
+    isDark: areCookiesEnabled ? localStorage.getItem('theme_dark')==='true' : false,
+    local: areCookiesEnabled ? localStorage.getItem('i18nextLng') : navigator.language,
     location: [24.941304, 37.445081],
     languages: [ 'en', 'el'],
     syrosBounds: [ [24.84, 37.35], [24.99, 37.52] ],
